@@ -1,3 +1,75 @@
 <resources>
     <string name="app_name">Pips Lover</string>
+
+    <string-array name="pair_name">
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+        <item>XAU/USD</item>
+
+
+    </string-array>
+
+
+    <string-array name="pair_desc">
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+        <item>Bit the gold</item>
+
+
+    </string-array>
+
 </resources>
