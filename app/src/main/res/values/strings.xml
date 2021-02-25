@@ -72,4 +72,16 @@
 
     </string-array>
 
+    <string name="home">home</string>
+    <string name="dashboard">dashboard</string>
+    <string name="about">about</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="profile">profile</string>
+    <string name="contact">contact</string>
+    <string name="riskratio">Risk Ratio</string>
+    <string name="report">Monthly Report</string>
+    <string name="privecy"><![CDATA[Privecy & Policy]]></string>
+    <string name="share">Share</string>
+
 </resources>
