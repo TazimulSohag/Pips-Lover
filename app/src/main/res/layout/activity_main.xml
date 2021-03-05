@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    android:background="#F4F6F6"
+    tools:context=".activity.MainActivity"
     android:id="@+id/drawerlayout_id">
 
     <RelativeLayout
@@ -20,12 +21,56 @@
             android:layout_height="wrap_content" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hello world"
-            android:layout_centerInParent="true"
-            android:textSize="28sp"/>
+        <RelativeLayout
+            android:layout_below="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/timer"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/red"
+                android:text="24-04-2021"
+                tools:layout_editor_absoluteX="328dp"
+                tools:layout_editor_absoluteY="22dp" />
+
+            <Button
+                android:id="@+id/new_paer_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add new Pear +"
+                android:layout_below="@id/timer"
+                android:layout_centerHorizontal="true"
+                tools:layout_editor_absoluteX="153dp"
+                tools:layout_editor_absoluteY="88dp" />
+
+            <TextView
+                android:id="@+id/paer_msg"
+                android:layout_below="@id/new_paer_btn"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:text="Live Paers"
+                tools:layout_editor_absoluteX="145dp"
+                tools:layout_editor_absoluteY="191dp" />
+
+            <ListView
+                android:id="@+id/paer_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/paer_msg"
+                tools:layout_editor_absoluteX="104dp"
+                tools:layout_editor_absoluteY="268dp" />
+
+
+
+
+        </RelativeLayout>
+
 
 
     </RelativeLayout>

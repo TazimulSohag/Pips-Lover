@@ -1,8 +1,9 @@
-package co.banglabs.pips_lover;
+package co.banglabs.pips_lover.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import co.banglabs.pips_lover.R;
 
 public class Registration extends AppCompatActivity implements View.OnClickListener {
 
@@ -99,6 +102,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Toast.makeText(Registration.this, "Registration Sucessfull.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Registration.this, Login.class);
+                    startActivity(intent);
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(Registration.this, "Register is not Sucessfull.", Toast.LENGTH_SHORT).show();
