@@ -77,8 +77,8 @@
     <string name="about">about</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="profile">profile</string>
-    <string name="contact">contact</string>
+    <string name="profile">Profile</string>
+    <string name="contact">Contact</string>
     <string name="riskratio">Risk Ratio</string>
     <string name="report">Monthly Report</string>
     <string name="privecy"><![CDATA[Privecy & Policy]]></string>
@@ -86,5 +86,7 @@
     <string name="login_email">user_login_info</string>
     <string name="login_password">user_login_info</string>
     <string name="login_info">login_info</string>
+    <string name="chart">Weekly Chart</string>
+    <string name="logout">Log Out</string>
 
 </resources>

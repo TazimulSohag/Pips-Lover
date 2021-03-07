@@ -11,7 +11,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button add_item;
     ListView pairs;
-    DatabaseReference pair_reference;
+    DatabaseReference pair_reference, admin_reference;
     List<PairBundle> pair_list;
     TextView timer_view;
     /*SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);*/
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         timer_view = findViewById(R.id.timer);
 
+        admin_reference = FirebaseDatabase.getInstance().getReference("PairList");
         pair_reference = FirebaseDatabase.getInstance().getReference("Pairs").child(currentDateandTime);
         //timer_ref = FirebaseDatabase.getInstance().getReference("timers").child("timer1");
         pair_list = new ArrayList<>();
@@ -128,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+                Intent intent;
                 switch (item.getItemId()){
                     case R.id.home:
                         Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
@@ -142,6 +146,21 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.contact:
                         Toast.makeText(MainActivity.this, "Dashboard", Toast.LENGTH_SHORT).show();
                         drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.chart:
+                        Toast.makeText(MainActivity.this, "Chart", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, ChartActivity.class);
+                        startActivity(intent);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+                    case R.id.logout:
+                        SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
+                        preferences.edit().clear().commit();
+
+                        intent = new Intent(MainActivity.this, Login.class);
+                        startActivity(intent);
+                        finish();
+                        //drawerLayout.closeDrawer(GravityCompat.START);
                         break;
                 }
 
@@ -168,16 +187,31 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
 
-        pair_reference.addValueEventListener(new ValueEventListener() {
+        admin_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 pair_list.clear();
+
+                //Log.d("output", String.valueOf(snapshot.child("3").getValue()));
                 for(DataSnapshot pairsnapshot : snapshot.getChildren()){
+                    //Log.d("output", String.valueOf(snapshot.getChildrenCount()));
                     PairBundle pairBundle = pairsnapshot.getValue(PairBundle.class);
                     pair_list.add(pairBundle);
                 }
                 PairAdapter adapter = new PairAdapter(MainActivity.this, pair_list);
                 pairs.setAdapter(adapter);
+
+                /*long length = snapshot.getChildrenCount();
+                Log.d("out1", "ok");
+                for(int i = 1;i<=length;i++){
+                    PairBundle pairBundle = new PairBundle((String) snapshot.child(String.valueOf(i)).getValue());
+                    Log.d("out1", pairBundle.getPair_name());
+                    pair_list.add(pairBundle);
+                }
+                PairAdapter adapter = new PairAdapter(MainActivity.this, pair_list);
+                pairs.setAdapter(adapter);*/
+
+
             }
 
             @Override

@@ -25,7 +25,7 @@ import co.banglabs.pips_lover.datahandle.PairBundle;
 public class AddPairs extends AppCompatDialogFragment {
 
     EditText pair_name;
-    DatabaseReference pair_reference;
+    DatabaseReference pair_reference, admin_reference;
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -38,6 +38,7 @@ public class AddPairs extends AppCompatDialogFragment {
 
         pair_name = view.findViewById(R.id.pair_name_id);
         pair_reference = FirebaseDatabase.getInstance().getReference("Pairs").child(currentDateandTime);
+        admin_reference = FirebaseDatabase.getInstance().getReference("PairList");
 
         builder.setView(view)
                 .setTitle("Add Currency Pairs")
@@ -60,7 +61,7 @@ public class AddPairs extends AppCompatDialogFragment {
         if(!TextUtils.isEmpty(name)){
             
             PairBundle pairBundle = new PairBundle(name);
-            pair_reference.child(name).setValue(pairBundle);
+            admin_reference.child(name).setValue(pairBundle);
         }
         else{
             Toast.makeText(getContext(), "Pair Name Is Empty", Toast.LENGTH_SHORT).show();

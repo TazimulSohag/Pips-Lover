@@ -73,7 +73,7 @@
                         android:background="@color/transparent"
                         android:drawableLeft="@drawable/ic_person"
                         android:drawablePadding="@dimen/padding_8"
-                        android:hint="Name"
+                        android:hint="User Name"
                         android:inputType="text"
                         android:maxLength="30"
                         android:maxLines="1"

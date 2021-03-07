@@ -33,7 +33,7 @@ public class ProvideSignal extends AppCompatActivity {
     EditText tp1, tp2, sl, current_value;
     RadioGroup signal;
     Button submit;
-    DatabaseReference pair_reference;
+    DatabaseReference pair_reference, admin_reference;
 
     String takep1, takep2, stopl, signaloption, open_price, pair_name;
 
@@ -60,6 +60,7 @@ public class ProvideSignal extends AppCompatActivity {
 
 
         pair_reference = FirebaseDatabase.getInstance().getReference("Pairs").child(currentDateandTime);
+        admin_reference = FirebaseDatabase.getInstance().getReference("PairList");
         String pair_selected = getIntent().getStringExtra("pair_name");
         getSupportActionBar().setTitle("Set Signal");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -111,6 +112,7 @@ public class ProvideSignal extends AppCompatActivity {
 
         PairBundle pairBundle = new PairBundle(pair_name, "Online", signaloption, open_price, stopl, takep1, takep2, "Waiting", Runtime.getRuntime().toString());
         pair_reference.child(pair_name).setValue(pairBundle);
+        admin_reference.child(pair_name).setValue(pairBundle);
     }
 
     @Override
