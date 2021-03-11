@@ -146,7 +146,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -161,7 +160,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         );*/
-
 
         SharedPreferences.Editor editor = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE).edit();
         editor.putString(String.valueOf(R.string.login_email), logName.getText().toString());
