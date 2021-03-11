@@ -117,6 +117,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_1"
                         android:background="@color/view_line" />
+
+                    <EditText
+                        android:id="@+id/reg_token"
+                        style="@style/Font_family_light"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:drawableLeft="@drawable/ic_email"
+                        android:drawablePadding="@dimen/padding_8"
+                        android:hint="Referel Cose"
+                        android:inputType="textEmailAddress"
+                        android:maxLength="50"
+                        android:maxLines="1"
+                        android:padding="@dimen/padding_16"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="@dimen/text_18" />
+
+
+                    <View
+                        style="@style/Normal_Margin_Style"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_1"
+                        android:background="@color/view_line" />
                     <!--Email Details-->
 
 

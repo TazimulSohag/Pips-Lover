@@ -32,7 +32,7 @@ public class DataAPI {
     }
 
     public interface ConverterScrvice{
-        @GET("?apiKey="+key+url2+pear)
+        @GET("?apiKey="+key+url2+ pear)
         Call<CurrencyConverter> getPearValue();
 
     }
