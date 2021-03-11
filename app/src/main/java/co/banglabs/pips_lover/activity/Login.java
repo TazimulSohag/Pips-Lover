@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -31,11 +32,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     SharedPreferences sharedPref;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         sharedPref = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
         try{
             Toast.makeText(this, sharedPref.getString(String.valueOf(R.string.login_email), "default"), Toast.LENGTH_SHORT).show();
@@ -52,7 +53,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             //Toast.makeText(this, "error found", Toast.LENGTH_SHORT).show();
         }
 
-
         mAuth = FirebaseAuth.getInstance();
         logName = findViewById(R.id.reg_name_et);
         logPassword = findViewById(R.id.reg_password_et);
@@ -63,11 +63,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         login_btn.setOnClickListener(this);
         goto_reg.setOnClickListener(this);
-
-
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -77,21 +73,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             Intent intent = new Intent(Login.this, Registration.class);
             startActivity(intent);
             finish();
-
         }
 
         else{
 
-
             userLogin();
-
 
         }
 
     }
 
     private void userLogin() {
-
 
         String email, password;
 
@@ -103,7 +95,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             logName.setError("Enter an Email address");
             logName.requestFocus();
             return;
-
 
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -119,7 +110,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             logPassword.setError("Enter an password");
             logPassword.requestFocus();
             return;
-
 
         }
         if(password.length()<6){
@@ -156,7 +146,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -172,15 +161,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         );*/
 
-
         SharedPreferences.Editor editor = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE).edit();
         editor.putString(String.valueOf(R.string.login_email), logName.getText().toString());
         editor.putString(String.valueOf(R.string.login_password), logPassword.getText().toString());
         editor.apply();
         //Toast.makeText(this, sharedPref.getString(String.valueOf(R.string.login_email), "default"), Toast.LENGTH_SHORT).show();
 
-
     }
-
 
 }

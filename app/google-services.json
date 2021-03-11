@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "147016403941",
+    "project_id": "pips-lover",
+    "storage_bucket": "pips-lover.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:147016403941:android:2af6f72f79c68aa42dbd0c",
+        "android_client_info": {
+          "package_name": "co.banglabs.pips_lover"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "147016403941-2k9e2gsoaltp32u6gnkcqogd6us4c13l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcLAHHaYfRvz3CFoaxJcZzJthlXWBbBV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "147016403941-2k9e2gsoaltp32u6gnkcqogd6us4c13l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
