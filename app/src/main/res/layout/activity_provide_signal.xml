@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ProvideSignal">
+
+
+
+    <TextView
+        android:id="@+id/minas"
+        android:layout_below="@+id/option_section"
+        android:textColor="@color/blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="55dp"
+        android:padding="5dp"
+        android:text="-"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+    <TextView
+        android:id="@+id/plus"
+        android:layout_below="@+id/option_section"
+        android:textColor="@color/blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="55dp"
+        android:padding="5dp"
+        android:layout_alignParentEnd="true"
+        android:text="+"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+
+    <TextView
+        android:id="@+id/pair_name_id"
+        android:textColor="@color/blue"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Pair Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <EditText
+        android:id="@+id/current_value"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/pair_name_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="1.25455"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <LinearLayout
+        android:id="@+id/option_section"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_below="@id/current_value"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Signal"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <RadioGroup
+            android:id="@+id/action_group_id"
+            android:orientation="horizontal"
+            android:baselineAligned="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/buy_option_id"
+                android:textColor="@color/green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BUY"/>
+            <RadioButton
+                android:id="@+id/sell_option_id"
+                android:textColor="@color/red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SELL"/>
+
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tp1_section"
+        android:layout_marginVertical="10dp"
+        android:layout_below="@+id/option_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TP-1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <EditText
+            android:id="@+id/tp1"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_marginLeft="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="0dp"
+            android:hint="1.2345"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tp2_section"
+        android:layout_marginVertical="10dp"
+        android:layout_below="@+id/tp1_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TP-2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <EditText
+            android:id="@+id/tp2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_marginLeft="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="0dp"
+            android:hint="1.2345"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sl1_section"
+        android:layout_marginVertical="10dp"
+        android:layout_below="@+id/tp2_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingHorizontal="20dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SL"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <EditText
+            android:id="@+id/sl"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_marginLeft="10dp"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="0dp"
+            android:hint="1.2345"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/submit_btn_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Widget.Button"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:layout_below="@id/sl1_section"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
+
