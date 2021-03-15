@@ -12,6 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.database.DatabaseReference;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import co.banglabs.pips_lover.datahandle.PairBundle;
 import co.banglabs.pips_lover.R;
@@ -21,6 +25,7 @@ public class PairAdapter extends ArrayAdapter {
 
     private Activity context;
     private List<PairBundle> pairlist;
+
 
     public PairAdapter(Activity context, List<PairBundle> pairlist) {
         super(context, R.layout.pair_base_layout, pairlist);
@@ -49,12 +54,19 @@ public class PairAdapter extends ArrayAdapter {
         current_position.setText(pairBundle.getTrade_result());
         pswitch.setText(pairBundle.getPair_action());
 
-        if(pairBundle.getPair_action().equals("BUY")){
-            parentv.setBackgroundColor(Color.parseColor("#CBFBD3"));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String currentDateandTime = sdf.format(new Date());
+
+        if(pairBundle.getUpdate_time().equals(currentDateandTime)){
+            if(pairBundle.getPair_action().equals("BUY")){
+                parentv.setBackgroundColor(Color.parseColor("#CBFBD3"));
+            }
+            else if(pairBundle.getPair_action().equals("SELL")){
+                parentv.setBackgroundColor(Color.parseColor("#FBD8E4"));
+            }
         }
-        else if(pairBundle.getPair_action().equals("SELL")){
-            parentv.setBackgroundColor(Color.parseColor("#FBD8E4"));
-        }
+
+
 
 
         

@@ -4,18 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +34,7 @@ import co.banglabs.pips_lover.R;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView logName, logPassword, goto_reg;
+    private TextView logName, logPassword, goto_reg, forgot_pass;
     private Button login_btn;
     private FirebaseAuth mAuth;
     SharedPreferences sharedPref;
@@ -57,22 +64,65 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         logName = findViewById(R.id.reg_name_et);
         logPassword = findViewById(R.id.reg_password_et);
         goto_reg = findViewById(R.id.goto_reg_page_id);
-
+        forgot_pass = findViewById(R.id.forgot_id);
         login_btn = findViewById(R.id.login_btn_id);
 
 
         login_btn.setOnClickListener(this);
         goto_reg.setOnClickListener(this);
+        forgot_pass.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.goto_reg_page_id){
-            Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(Login.this, Registration.class);
             startActivity(intent);
             finish();
+        }
+        else if(v.getId()==R.id.forgot_id){
+
+            final EditText resetMail = new EditText(v.getContext());
+            final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+            passwordResetDialog.setTitle("Reset Password ?");
+            passwordResetDialog.setMessage("Enter Your Login Email To received Password Reset Link");
+            passwordResetDialog.setView(resetMail);
+            passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String mail="";
+                    if(!TextUtils.isEmpty(resetMail.getText())){
+                        mail = resetMail.getText().toString();
+                        mAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(Login.this, "An Email has been send to your email", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Login.this, "Email can't be send", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                    else{
+                        resetMail.setError("Enter an Email Aaddress");
+                    }
+
+                }
+            });
+            passwordResetDialog.setNeutralButton("Cancle", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            passwordResetDialog.setCancelable(true);
+            passwordResetDialog.create().show();
+
         }
 
         else{

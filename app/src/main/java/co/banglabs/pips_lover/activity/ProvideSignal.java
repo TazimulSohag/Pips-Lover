@@ -2,6 +2,7 @@ package co.banglabs.pips_lover.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,10 +13,14 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,7 +40,9 @@ public class ProvideSignal extends AppCompatActivity {
     Button submit;
     DatabaseReference pair_reference, admin_reference;
 
-    String takep1, takep2, stopl, signaloption, open_price, pair_name;
+    String takep1, takep2, stopl, signaloption, open_price, pair_name, currentDateandTime;
+
+
 
 
     @Override
@@ -56,8 +63,7 @@ public class ProvideSignal extends AppCompatActivity {
         pair_nametv = findViewById(R.id.pair_name_id);
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        String currentDateandTime = sdf.format(new Date());
-
+        currentDateandTime = sdf.format(new Date());
 
         pair_reference = FirebaseDatabase.getInstance().getReference("Pairs").child(currentDateandTime);
         admin_reference = FirebaseDatabase.getInstance().getReference("PairList");
@@ -65,15 +71,12 @@ public class ProvideSignal extends AppCompatActivity {
         getSupportActionBar().setTitle("Set Signal");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         //setting initial values for tp1, tp2 and sl
         pair_nametv.setText(pair_selected);
         open_price = current_value.getText().toString();
         tp1.setText(open_price);
         tp2.setText(open_price);
         sl.setText(open_price);
-
-
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,11 +109,43 @@ public class ProvideSignal extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        admin_reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                PairBundle pairBundle = snapshot.child(pair_nametv.getText().toString()).getValue(PairBundle.class);
+                tp1.setText(pairBundle.getTake_profit_1());
+                tp2.setText(pairBundle.getTake_profit_2());
+                sl.setText(pairBundle.getStop_loss());
+                current_value.setText(pairBundle.getOpen_price());
+                if(pairBundle.getPair_action().equals("BUY")){
+
+                    signal.check(R.id.buy_option_id);
+                }else{
+                    signal.check(R.id.sell_option_id);
+                }
+                //Log.d("out2", "value "+pairBundle.getPair_name());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
     private void addSignal() {
 
-        PairBundle pairBundle = new PairBundle(pair_name, "Online", signaloption, open_price, stopl, takep1, takep2, "Waiting", Runtime.getRuntime().toString());
+        PairBundle pairBundle = new PairBundle(pair_name, "Online", signaloption, open_price, stopl, takep1, takep2, "Waiting", currentDateandTime);
         pair_reference.child(pair_name).setValue(pairBundle);
         admin_reference.child(pair_name).setValue(pairBundle);
     }

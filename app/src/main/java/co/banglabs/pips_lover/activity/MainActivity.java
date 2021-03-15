@@ -52,10 +52,11 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     private int REQUEST_CODE=11;
+    String lastUpdateDate="", currentDateandTime;
 
     Button add_item;
     ListView pairs;
-    DatabaseReference pair_reference, admin_reference;
+    DatabaseReference pair_reference, admin_reference, date_reference;
     List<PairBundle> pair_list;
     TextView timer_view;
     /*SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);*/
@@ -71,12 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        String currentDateandTime = sdf.format(new Date());
+        currentDateandTime = sdf.format(new Date());
 
 
         timer_view = findViewById(R.id.timer);
 
         admin_reference = FirebaseDatabase.getInstance().getReference("PairList");
+        date_reference = FirebaseDatabase.getInstance().getReference();
         pair_reference = FirebaseDatabase.getInstance().getReference("Pairs").child(currentDateandTime);
         //timer_ref = FirebaseDatabase.getInstance().getReference("timers").child("timer1");
         pair_list = new ArrayList<>();
@@ -91,9 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 addPairs.show(getSupportFragmentManager(), "example dialog");
             }
         });
-
-
-
 
 
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
@@ -186,20 +185,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
         admin_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 pair_list.clear();
 
-                //Log.d("output", String.valueOf(snapshot.child("3").getValue()));
+                //String database_Date = snapshot.getChildren().
+                //Log.d("output", String.valueOf(snapshot.child("UpdateDate").getValue()));
+
                 for(DataSnapshot pairsnapshot : snapshot.getChildren()){
+
                     //Log.d("output", String.valueOf(snapshot.getChildrenCount()));
                     PairBundle pairBundle = pairsnapshot.getValue(PairBundle.class);
+
                     pair_list.add(pairBundle);
                 }
+
                 PairAdapter adapter = new PairAdapter(MainActivity.this, pair_list);
+
                 pairs.setAdapter(adapter);
+
+
+
 
                 /*long length = snapshot.getChildrenCount();
                 Log.d("out1", "ok");
@@ -210,7 +217,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 PairAdapter adapter = new PairAdapter(MainActivity.this, pair_list);
                 pairs.setAdapter(adapter);*/
-
 
             }
 
