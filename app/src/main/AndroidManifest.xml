@@ -11,12 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PipsLover">
-        <activity android:name=".activity.ChartActivity"
-            android:theme="@style/Theme.MaterialComponents.Light"
-            >
-
-
-        </activity>
+        <activity android:name=".activity.ReferenceMonitorActivity"></activity>
+        <activity
+            android:name=".activity.ChartActivity"
+            android:theme="@style/Theme.MaterialComponents.Light"></activity>
         <activity android:name=".activity.Registration" />
         <activity
             android:name=".activity.ProvideSignal"
@@ -28,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

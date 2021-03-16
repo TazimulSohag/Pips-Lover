@@ -152,6 +152,12 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
+                    case R.id.referd_monitor:
+                        Toast.makeText(MainActivity.this, "Chart", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(MainActivity.this, ReferenceMonitorActivity.class);
+                        startActivity(intent);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
                     case R.id.logout:
                         SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
                         preferences.edit().clear().commit();

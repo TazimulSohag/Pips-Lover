@@ -34,7 +34,8 @@ import co.banglabs.pips_lover.R;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView logName, logPassword, goto_reg, forgot_pass;
+    private EditText logName, logPassword;
+    TextView goto_reg, forgot_pass;
     private Button login_btn;
     private FirebaseAuth mAuth;
     SharedPreferences sharedPref;
@@ -46,7 +47,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         sharedPref = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
         try{
-            Toast.makeText(this, sharedPref.getString(String.valueOf(R.string.login_email), "default"), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, sharedPref.getString(String.valueOf(R.string.login_email), "default"), Toast.LENGTH_SHORT).show();
             if(sharedPref.contains(String.valueOf(R.string.login_email)) && sharedPref.contains(String.valueOf(R.string.login_password))){
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 startActivity(intent);
@@ -87,7 +88,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             final EditText resetMail = new EditText(v.getContext());
             final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
             passwordResetDialog.setTitle("Reset Password ?");
-            passwordResetDialog.setMessage("Enter Your Login Email To received Password Reset Link");
+            passwordResetDialog.setMessage("Enter Your Login Email To receive Password Reset mail");
             passwordResetDialog.setView(resetMail);
             passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
@@ -191,7 +192,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     finish();
                 } else {
                     // If sign in fails, display a message to the user.
-                    Toast.makeText(Login.this, "login is not Sucessfull.", Toast.LENGTH_SHORT).show();
+                    logName.requestFocus();
+                    Toast.makeText(Login.this, "Email or password is not match.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

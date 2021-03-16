@@ -23,6 +23,10 @@
         android:id="@+id/chart"
         android:title="@string/chart"
         android:icon="@drawable/about"/>
+    <item
+        android:id="@+id/referd_monitor"
+        android:title="@string/referd_monitor"
+        android:icon="@drawable/about"/>
 
     <item
         android:id="@+id/privecy"
