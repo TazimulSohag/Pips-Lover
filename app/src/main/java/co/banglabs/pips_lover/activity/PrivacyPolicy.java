@@ -13,6 +13,9 @@ public class PrivacyPolicy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy_policy);
+        getSupportActionBar().setTitle("Privacy & Policy");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
 
@@ -20,6 +23,15 @@ public class PrivacyPolicy extends AppCompatActivity {
 
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
 

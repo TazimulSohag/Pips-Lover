@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
-    private int REQUEST_CODE=11;
+    private int REQUEST_CODE = 11;
 
     Button add_item;
     ListView pairs;
@@ -93,18 +93,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
         Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
         appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
             @Override
             public void onSuccess(AppUpdateInfo result) {
 
-                if(result.updateAvailability()== UpdateAvailability.UPDATE_AVAILABLE
-                && result.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-                ){
+                if (result.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                        && result.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+                ) {
                     try {
                         appUpdateManager.startUpdateFlowForResult(result, AppUpdateType.IMMEDIATE, MainActivity.this, REQUEST_CODE);
                     } catch (IntentSender.SendIntentException e) {
@@ -117,9 +114,9 @@ public class MainActivity extends AppCompatActivity {
 
         //getSupportActionBar().hide();
 
-        toolbar=findViewById(R.id.toolbar);
-        navigationView=findViewById(R.id.navmenu);
-        drawerLayout=findViewById(R.id.drawerlayout_id);
+        toolbar = findViewById(R.id.toolbar);
+        navigationView = findViewById(R.id.navmenu);
+        drawerLayout = findViewById(R.id.drawerlayout_id);
 
         setSupportActionBar(toolbar);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
@@ -132,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 Intent intent;
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.home:
                         Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         drawerLayout.closeDrawer(GravityCompat.START);
@@ -153,10 +150,18 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         break;
+
+
+                    case R.id.privecy:
+                        intent = new Intent(MainActivity.this, PrivacyPolicy.class);
+                        startActivity(intent);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
+
+
                     case R.id.logout:
                         SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
                         preferences.edit().clear().commit();
-
                         intent = new Intent(MainActivity.this, Login.class);
                         startActivity(intent);
                         finish();
@@ -173,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(REQUEST_CODE == requestCode){
+        if (REQUEST_CODE == requestCode) {
             Toast.makeText(this, "Download start", Toast.LENGTH_SHORT).show();
 
 
@@ -193,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 pair_list.clear();
 
                 //Log.d("output", String.valueOf(snapshot.child("3").getValue()));
-                for(DataSnapshot pairsnapshot : snapshot.getChildren()){
+                for (DataSnapshot pairsnapshot : snapshot.getChildren()) {
                     //Log.d("output", String.valueOf(snapshot.getChildrenCount()));
                     PairBundle pairBundle = pairsnapshot.getValue(PairBundle.class);
                     pair_list.add(pairBundle);

@@ -6,16 +6,15 @@
     android:orientation="vertical"
     android:padding="12dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:background="@drawable/banner"
-    >
+    android:background="@drawable/banner">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:elevation="10dp"
         android:id="@+id/nav_header_circleimageview_id"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/pips_lover_icon" />
+        android:src="@mipmap/pips_lover_icon_round" />
 
     <TextView
         android:id="@+id/nav_header_name_id"
@@ -34,9 +33,9 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp"
         android:text="pipslover24@gmail.com"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="#ffff"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="14sp"
+        android:textSize="18sp"
         android:paddingBottom="4dp"/>
 
     <View
