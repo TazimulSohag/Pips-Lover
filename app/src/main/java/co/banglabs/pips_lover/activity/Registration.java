@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,17 +29,18 @@ import co.banglabs.pips_lover.datahandle.UserBundle;
 
 public class Registration extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView regUserName, regUserPassword, regEmail;
+    private EditText regUserName, regUserPassword, regEmail, token;
     private Button reg_button;
     private FirebaseAuth mAuth;
-    DatabaseReference user_reference;
-    DataSnapshot user_snapshot;
+    DatabaseReference user_reference, token_reference;
+    DataSnapshot user_snapshot, token_snapshot;
 
     @Override
     protected void onStart() {
         super.onStart();
 
         user_reference = FirebaseDatabase.getInstance().getReference("UserInfo");
+        token_reference = FirebaseDatabase.getInstance().getReference("Reference");
 
         user_reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -57,6 +59,21 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        token_reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                token_snapshot = snapshot;
+
+                //Log.d("TAGv", String.valueOf(snapshot.child("reference1").child("history").getValue(String.class)));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 
@@ -66,6 +83,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_registration);
 
 
+        token = findViewById(R.id.reg_token);
         regUserName = findViewById(R.id.reg_name_et);
         regUserPassword = findViewById(R.id.reg_password_et);
         regEmail = findViewById(R.id.reg_email_et);
@@ -95,10 +113,19 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     private void register() {
 
         Toast.makeText(this, "Registering", Toast.LENGTH_SHORT).show();
-        String name, email, password;
+        String name, email, password, user_token;
         name = regUserName.getText().toString().trim();
         email = regEmail.getText().toString().trim();
         password = regUserPassword.getText().toString().trim();
+        user_token = token.getText().toString();
+
+        if(name.isEmpty()){
+
+            regUserName.setError("Enter a Valid name");
+            regUserName.requestFocus();
+            return;
+
+        }
 
         if(email.isEmpty()){
 
@@ -106,10 +133,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             regEmail.requestFocus();
             return;
 
-
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-
 
             regEmail.setError("Enter a valid Email address");
             regEmail.requestFocus();
@@ -126,41 +151,73 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         }
         if(password.length()<6){
 
-            regUserPassword.setError("Enter an strong");
+            regUserPassword.setError("Enter an strong password");
             regUserPassword.requestFocus();
             return;
 
         }
 
-        if(check_name_validity(name)){
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+        if(token_snapshot.hasChild(user_token)){
+            if(check_name_validity(name)){
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if (task.isSuccessful()) {
+                        if (task.isSuccessful()) {
 
-                        UserBundle userBundle = new UserBundle(name, email);
-                        user_reference.child(name).setValue(userBundle);
-                        // Sign in success, update UI with the signed-in user's information
-                        Toast.makeText(Registration.this, "Registration Sucessfull.", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Registration.this, Login.class);
-                        startActivity(intent);
-                    } else {
-                        regEmail.setError("This email is already registered");
-                        regEmail.requestFocus();
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(Registration.this, "Register is not Sucessfull.", Toast.LENGTH_SHORT).show();
+                            UserBundle userBundle = new UserBundle(name, email, user_token);
+
+
+                                try{
+                                    user_reference.child(name).setValue(userBundle);
+
+                                    String histroy_val="";
+                                    String recent_val="";
+                                    histroy_val = String.valueOf(token_snapshot.child(user_token).child("history").getValue(String.class));
+                                    recent_val =  String.valueOf(token_snapshot.child(user_token).child("recent").getValue(String.class));
+
+                                    histroy_val = String.valueOf(Integer.parseInt(histroy_val)+1);
+                                    recent_val = String.valueOf(Integer.parseInt(recent_val)+1);
+
+                                    token_reference.child(user_token).child("history").setValue(histroy_val);
+                                    token_reference.child(user_token).child("recent").setValue(recent_val);
+
+                                    Intent intent = new Intent(Registration.this, Login.class);
+                                    startActivity(intent);
+
+                                }
+                                catch (Exception e){
+                                    Toast.makeText(Registration.this, "error found", Toast.LENGTH_SHORT).show();
+                                }
+
+
+
+                            //int history_val = token_reference.child(user_token).child("history").
+                            // Sign in success, update UI with the signed-in user's information
+                            //Toast.makeText(Registration.this, "Registration Sucessfull.", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            regEmail.setError("This email is already registered");
+                            regEmail.requestFocus();
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(Registration.this, "Register is not Sucessfull.", Toast.LENGTH_SHORT).show();
+                        }
+
+
                     }
-
-
-                }
-            });
+                });
+            }
+            else{
+                regUserName.setError("This name is already taken");
+                regUserName.requestFocus();
+            }
         }
+
         else{
-            regUserName.setError("This name is already taken");
-            regUserName.requestFocus();
+            token.setError("Enter a valid token");
+            token.requestFocus();
+            //Toast.makeText(Registration.this, "enter a valid token.", Toast.LENGTH_SHORT).show();
         }
-
 
 
     }
@@ -178,4 +235,26 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         //return false;
     }
 
+}
+
+
+class Retrive{
+
+    String history, recent;
+    public Retrive(){
+
+    }
+
+    public Retrive(String history, String recent) {
+        this.history = history;
+        this.recent = recent;
+    }
+
+    public String getA() {
+        return history;
+    }
+
+    public String getB() {
+        return recent;
+    }
 }

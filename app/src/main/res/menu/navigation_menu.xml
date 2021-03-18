@@ -3,38 +3,40 @@
 
     <item
         android:id="@+id/profile"
-        android:icon="@drawable/profile_icon"
-        android:title="@string/profile" />
-
-
-    <item
-        android:id="@+id/risk_ratio"
-        android:icon="@drawable/risk_icon"
-        android:title="@string/riskratio" />
-
-    <item
-        android:id="@+id/chart"
-        android:icon="@drawable/chart_icon"
-        android:title="@string/chart" />
+        android:title="@string/profile"
+        android:icon="@drawable/dashboard"/>
 
     <item
         android:id="@+id/contact"
-        android:icon="@drawable/contact_icon"
-        android:title="@string/contact" />
+        android:title="@string/contact"
+        android:icon="@drawable/about"/>
+    <item
+        android:id="@+id/risk_ratio"
+        android:title="@string/riskratio"
+        android:icon="@drawable/home"/>
+
+    <!--<item
+        android:id="@+id/report"
+        android:title="@string/report"
+        android:icon="@drawable/dashboard"/>-->
+    <item
+        android:id="@+id/chart"
+        android:title="@string/chart"
+        android:icon="@drawable/about"/>
 
     <item
         android:id="@+id/privecy"
-        android:icon="@drawable/privacy_icon"
-        android:title="@string/privecy" />
+        android:title="@string/privecy"
+        android:icon="@drawable/about"/>
 
     <item
         android:id="@+id/share"
-        android:icon="@drawable/share_icon"
-        android:title="@string/share" />
+        android:title="@string/share"
+        android:icon="@drawable/about"/>
 
     <item
         android:id="@+id/logout"
-        android:icon="@drawable/logout_icon"
-        android:title="@string/logout" />
+        android:title="@string/logout"
+        android:icon="@drawable/about"/>
 
 </menu>

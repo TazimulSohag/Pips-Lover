@@ -19,7 +19,7 @@ public class PairBundle {
 
     }
 
-    public PairBundle(String pair_name, String pair_statas, String pair_action, String open_price, String stop_loss, String take_profit_1, String take_profit_2, String trade_result, String update_time) {
+    public PairBundle(String pair_name, String pair_statas, String pair_action, String open_price, String stop_loss, String take_profit_1, String take_profit_2, String trade_result, String LastUpdateDate) {
         this.pair_name = pair_name;
         this.pair_statas = pair_statas;
         this.pair_action = pair_action;
@@ -27,9 +27,9 @@ public class PairBundle {
         this.stop_loss = stop_loss;
         this.take_profit_1 = take_profit_1;
         this.take_profit_2 = take_profit_2;
-        this.take_profit_3 = take_profit_3;
+        this.take_profit_3 = "";
         this.trade_result = trade_result;
-        this.update_time = update_time;
+        this.update_time = LastUpdateDate;
     }
 
     public PairBundle(String pair_name) {
