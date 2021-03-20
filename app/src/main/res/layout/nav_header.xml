@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="196dp"
-    android:gravity="bottom"
-    android:orientation="vertical"
+    android:background="@drawable/banner"
     android:padding="12dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:paddingBottom="10dp">
+
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/nav_header_circleimageview_id"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/pulok" />
+        android:id="@+id/icon_id"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/pipsicon"/>
 
     <TextView
-        android:id="@+id/nav_header_name_id"
+        android:id="@+id/user_name_id"
+        android:alpha=".8"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:text="Abu Jafor Saleh"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
-        android:textSize="14sp"
-        android:textColor="@android:color/black"/>
-
+        android:text="MD.Abu Jafor Saleh"
+        android:layout_above="@+id/user_mail_id"/>
     <TextView
-        android:id="@+id/nav_header_emailaddress_id"
+        android:alpha=".7"
+        android:id="@+id/user_mail_id"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:text="Abupulok0@gmail.com"
-        android:textColor="@android:color/darker_gray"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="14sp"
-        android:paddingBottom="4dp"/>
+        android:text="abujafo34@gmail.com" />
 
-    <View
-        android:layout_marginTop="2dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center_horizontal"
-        android:background="#15000000"/>
 
-</LinearLayout>
+</RelativeLayout>

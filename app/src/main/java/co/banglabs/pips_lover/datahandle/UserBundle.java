@@ -9,7 +9,6 @@ public class UserBundle {
 
     public UserBundle(){
 
-
     }
 
     public UserBundle(String name, String email, String token) {

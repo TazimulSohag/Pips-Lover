@@ -13,9 +13,6 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,7 +24,7 @@ import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
-import com.google.android.play.core.tasks.OnSuccessListener;
+
 import com.google.android.play.core.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,7 +37,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import co.banglabs.pips_lover.AddPairDialog;
 import co.banglabs.pips_lover.AddPairs;
+import co.banglabs.pips_lover.CustomDialogClass;
 import co.banglabs.pips_lover.R;
 import co.banglabs.pips_lover.datahandle.PairBundle;
 import co.banglabs.pips_lover.adapter.PairAdapter;
@@ -51,12 +50,11 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle actionBarDrawerToggle;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
-    private int REQUEST_CODE=11;
-    String lastUpdateDate="", currentDateandTime;
-
+    private final int REQUEST_CODE=11;
+    String currentDateandTime;
     Button add_item;
     ListView pairs;
-    DatabaseReference pair_reference, admin_reference, date_reference;
+    DatabaseReference pair_reference, admin_reference;
     List<PairBundle> pair_list;
     TextView timer_view;
     /*SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);*/
@@ -65,53 +63,51 @@ public class MainActivity extends AppCompatActivity {
     /*String log_pass = sharedPref.getString(getString(R.string.login_password), " ");
     String log_name = sharedPref.getString(getString(R.string.login_email), " ");*/
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         currentDateandTime = sdf.format(new Date());
 
 
         timer_view = findViewById(R.id.timer);
 
         admin_reference = FirebaseDatabase.getInstance().getReference("PairList");
-        date_reference = FirebaseDatabase.getInstance().getReference();
+        //date_reference = FirebaseDatabase.getInstance().getReference().child("UpdateDate");
         pair_reference = FirebaseDatabase.getInstance().getReference("Pairs").child(currentDateandTime);
-        //timer_ref = FirebaseDatabase.getInstance().getReference("timers").child("timer1");
         pair_list = new ArrayList<>();
 
         add_item = findViewById(R.id.new_paer_btn);
         pairs = findViewById(R.id.paer_list);
 
-        add_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddPairs addPairs = new AddPairs();
-                addPairs.show(getSupportFragmentManager(), "example dialog");
-            }
+        add_item.setOnClickListener(v -> {
+
+            AddPairDialog cdd=new AddPairDialog(MainActivity.this);
+            cdd.show();
+            /*
+            AddPairs addPairs = new AddPairs();
+            addPairs.show(getSupportFragmentManager(), "example dialog");*/
         });
 
 
         AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
         Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
-        appUpdateInfoTask.addOnSuccessListener(new OnSuccessListener<AppUpdateInfo>() {
-            @Override
-            public void onSuccess(AppUpdateInfo result) {
+        appUpdateInfoTask.addOnSuccessListener(result -> {
 
-                if(result.updateAvailability()== UpdateAvailability.UPDATE_AVAILABLE
-                && result.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-                ){
-                    try {
-                        appUpdateManager.startUpdateFlowForResult(result, AppUpdateType.IMMEDIATE, MainActivity.this, REQUEST_CODE);
-                    } catch (IntentSender.SendIntentException e) {
-                        e.printStackTrace();
-                    }
+            if(result.updateAvailability()== UpdateAvailability.UPDATE_AVAILABLE
+            && result.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+            ){
+                try {
+                    appUpdateManager.startUpdateFlowForResult(result, AppUpdateType.IMMEDIATE, MainActivity.this, REQUEST_CODE);
+                } catch (IntentSender.SendIntentException e) {
+                    e.printStackTrace();
                 }
-
             }
+
         });
 
         //getSupportActionBar().hide();
@@ -125,52 +121,59 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        navigationView.setNavigationItemSelectedListener(item -> {
 
-                Intent intent;
-                switch (item.getItemId()){
-                    case R.id.home:
-                        Toast.makeText(MainActivity.this, "Home", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
+            Intent intent;
+            switch (item.getItemId()){
 
-                    case R.id.profile:
-                        Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
+                case R.id.profile:
+                    intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    startActivity(intent);
+                    //Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
 
-                    case R.id.contact:
-                        Toast.makeText(MainActivity.this, "Dashboard", Toast.LENGTH_SHORT).show();
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.chart:
-                        Toast.makeText(MainActivity.this, "Chart", Toast.LENGTH_SHORT).show();
-                        intent = new Intent(MainActivity.this, ChartActivity.class);
-                        startActivity(intent);
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.referd_monitor:
-                        Toast.makeText(MainActivity.this, "Chart", Toast.LENGTH_SHORT).show();
-                        intent = new Intent(MainActivity.this, ReferenceMonitorActivity.class);
-                        startActivity(intent);
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                    case R.id.logout:
-                        SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
-                        preferences.edit().clear().commit();
+                case R.id.privecy:
+                    intent = new Intent(MainActivity.this, PrivacyPolicy.class);
+                    startActivity(intent);
+                    //Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
 
-                        intent = new Intent(MainActivity.this, Login.class);
-                        startActivity(intent);
-                        finish();
-                        //drawerLayout.closeDrawer(GravityCompat.START);
-                        break;
-                }
+                case R.id.risk_ratio:
+                    intent = new Intent(MainActivity.this, RiskRatioActivity.class);
+                    startActivity(intent);
+                    //Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
 
-                return true;
+                case R.id.contact:
+                    //Toast.makeText(MainActivity.this, "Dashboard", Toast.LENGTH_SHORT).show();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
+                case R.id.chart:
+                    //Toast.makeText(MainActivity.this, "Chart", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(MainActivity.this, ChartActivity.class);
+                    startActivity(intent);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
+                case R.id.referd_monitor:
+                    //Toast.makeText(MainActivity.this, "Chart", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(MainActivity.this, ReferenceMonitorActivity.class);
+                    startActivity(intent);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
+                case R.id.logout:
+                    SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
+                    preferences.edit().clear().apply();
+                    intent = new Intent(MainActivity.this, Login.class);
+                    startActivity(intent);
+                    finish();
+                    //drawerLayout.closeDrawer(GravityCompat.START);
+                    break;
             }
+
+            return true;
         });
     }
 
@@ -180,27 +183,23 @@ public class MainActivity extends AppCompatActivity {
 
         if(REQUEST_CODE == requestCode){
             Toast.makeText(this, "Download start", Toast.LENGTH_SHORT).show();
-
-
         }
 
     }
-
-
     @Override
     protected void onStart() {
         super.onStart();
 
+
         admin_reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 pair_list.clear();
 
                 //String database_Date = snapshot.getChildren().
                 //Log.d("output", String.valueOf(snapshot.child("UpdateDate").getValue()));
 
                 for(DataSnapshot pairsnapshot : snapshot.getChildren()){
-
                     //Log.d("output", String.valueOf(snapshot.getChildrenCount()));
                     PairBundle pairBundle = pairsnapshot.getValue(PairBundle.class);
 
@@ -210,9 +209,6 @@ public class MainActivity extends AppCompatActivity {
                 PairAdapter adapter = new PairAdapter(MainActivity.this, pair_list);
 
                 pairs.setAdapter(adapter);
-
-
-
 
                 /*long length = snapshot.getChildrenCount();
                 Log.d("out1", "ok");
@@ -231,8 +227,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
-
 }

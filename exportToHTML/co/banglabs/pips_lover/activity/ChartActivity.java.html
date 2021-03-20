@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>ChartActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ChartActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">co.banglabs.pips_lover.activity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.MenuItem</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.anychart.AnyChart</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.anychart.AnyChartView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.anychart.chart.common.dataentry.DataEntry</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.anychart.chart.common.dataentry.ValueDataEntry</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.anychart.chart.common.listener.Event</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.anychart.chart.common.listener.ListenersInterface</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.anychart.charts.Pie</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.anychart.enums.Align</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.anychart.enums.LegendLayout</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">co.banglabs.pips_lover.R</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">ChartActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_chart)</span><span class="s0">;</span>
+
+        <span class="s1">getSupportActionBar().setTitle(</span><span class="s2">&quot;Weekly Chart&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">getSupportActionBar().setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+
+
+        <span class="s1">AnyChartView anyChartView = findViewById(R.id.any_chart_view)</span><span class="s0">;</span>
+        <span class="s3">//AnyChartView anyChartView2 = findViewById(R.id.any_chart_view2);</span>
+
+        <span class="s1">anyChartView.setProgressBar(findViewById(R.id.progress_bar))</span><span class="s0">;</span>
+        <span class="s3">//anyChartView2.setProgressBar(findViewById(R.id.progress_bar));</span>
+
+        <span class="s1">Pie pie = AnyChart.pie()</span><span class="s0">;</span>
+
+        <span class="s1">pie.setOnClickListener(</span><span class="s0">new </span><span class="s1">ListenersInterface.OnClickListener(</span><span class="s0">new </span><span class="s1">String[]{</span><span class="s2">&quot;x&quot;</span><span class="s0">, </span><span class="s2">&quot;value&quot;</span><span class="s1">}) {</span>
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(Event event) {</span>
+                <span class="s3">//Toast.makeText(ChartActivity.this, event.getData().get(&quot;x&quot;) + &quot;:&quot; + event.getData().get(&quot;value&quot;), Toast.LENGTH_SHORT).show();</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+        <span class="s1">List&lt;DataEntry&gt; data = </span><span class="s0">new </span><span class="s1">ArrayList&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s1">data.add(</span><span class="s0">new </span><span class="s1">ValueDataEntry(</span><span class="s2">&quot;Take Profit 1&quot;</span><span class="s0">, </span><span class="s4">10</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">data.add(</span><span class="s0">new </span><span class="s1">ValueDataEntry(</span><span class="s2">&quot;Take Profit 2&quot;</span><span class="s0">, </span><span class="s4">18</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">data.add(</span><span class="s0">new </span><span class="s1">ValueDataEntry(</span><span class="s2">&quot;Stop Loass&quot;</span><span class="s0">, </span><span class="s4">5</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">data.add(</span><span class="s0">new </span><span class="s1">ValueDataEntry(</span><span class="s2">&quot;Unhitted Signal&quot;</span><span class="s0">, </span><span class="s4">5</span><span class="s1">))</span><span class="s0">;</span>
+
+        <span class="s1">pie.data(data)</span><span class="s0">;</span>
+
+        <span class="s1">pie.title(</span><span class="s2">&quot;Signal Accurecy Chart of Last 7 days&quot;</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">pie.labels().position(</span><span class="s2">&quot;outside&quot;</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">pie.legend().title().enabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">pie.legend().title()</span>
+                <span class="s1">.text(</span><span class="s2">&quot;Retail channels&quot;</span><span class="s1">)</span>
+                <span class="s1">.padding(</span><span class="s4">0d</span><span class="s0">, </span><span class="s4">0d</span><span class="s0">, </span><span class="s4">10d</span><span class="s0">, </span><span class="s4">0d</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">pie.legend()</span>
+                <span class="s1">.position(</span><span class="s2">&quot;center-bottom&quot;</span><span class="s1">)</span>
+                <span class="s1">.itemsLayout(LegendLayout.HORIZONTAL)</span>
+                <span class="s1">.align(Align.CENTER)</span><span class="s0">;</span>
+
+        <span class="s1">anyChartView.setChart(pie)</span><span class="s0">;</span>
+        <span class="s3">//anyChartView2.setChart(pie);</span>
+
+
+
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(MenuItem item) {</span>
+        <span class="s0">switch </span><span class="s1">(item.getItemId()) {</span>
+            <span class="s0">case </span><span class="s1">android.R.id.home:</span>
+                <span class="s1">finish()</span><span class="s0">;</span>
+                <span class="s0">return true;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">return super</span><span class="s1">.onOptionsItemSelected(item)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>

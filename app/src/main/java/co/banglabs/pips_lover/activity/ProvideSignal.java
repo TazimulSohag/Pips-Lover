@@ -1,40 +1,33 @@
 package co.banglabs.pips_lover.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import co.banglabs.pips_lover.datahandle.CurrencyConverter;
-import co.banglabs.pips_lover.datahandle.DataAPI;
 import co.banglabs.pips_lover.datahandle.PairBundle;
 import co.banglabs.pips_lover.R;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 public class ProvideSignal extends AppCompatActivity {
-    TextView pair_nametv, date_view;
+    TextView pair_nametv;
     EditText tp1, tp2, sl, current_value;
     RadioGroup signal;
     Button submit;
@@ -51,6 +44,10 @@ public class ProvideSignal extends AppCompatActivity {
 
         setContentView(R.layout.activity_provide_signal);
 
+        Toolbar toolbar = findViewById(R.id.toolbar_provide_signal);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //getData();
 
         tp1 = findViewById(R.id.tp1);
@@ -62,51 +59,51 @@ public class ProvideSignal extends AppCompatActivity {
         signal = findViewById(R.id.action_group_id);
         pair_nametv = findViewById(R.id.pair_name_id);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         currentDateandTime = sdf.format(new Date());
 
         pair_reference = FirebaseDatabase.getInstance().getReference("Pairs").child(currentDateandTime);
         admin_reference = FirebaseDatabase.getInstance().getReference("PairList");
+
         String pair_selected = getIntent().getStringExtra("pair_name");
-        getSupportActionBar().setTitle("Set Signal");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         //setting initial values for tp1, tp2 and sl
         pair_nametv.setText(pair_selected);
-        open_price = current_value.getText().toString();
-        tp1.setText(open_price);
-        tp2.setText(open_price);
-        sl.setText(open_price);
+        if(!current_value.getText().equals("null")){
+            open_price = current_value.getText().toString();
+            tp1.setText(open_price);
+            tp2.setText(open_price);
+            sl.setText(open_price);
+        }
 
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    int id;
-                    id = signal.getCheckedRadioButtonId();
-                    RadioButton selected = findViewById(id);
-                    signaloption = selected.getText().toString();
-                }catch (Exception e){
-                    Toast.makeText(ProvideSignal.this, "Please select action", Toast.LENGTH_SHORT).show();
-                }
-                
-                
-                takep1 = tp1.getText().toString();
-                takep2 = tp2.getText().toString();
-                stopl = sl.getText().toString();
-                open_price = current_value.getText().toString();
-                pair_name = pair_nametv.getText().toString();
 
-                if(!(TextUtils.isEmpty(takep1) || TextUtils.isEmpty(takep2) || TextUtils.isEmpty(stopl) || TextUtils.isEmpty(signaloption))){
+        submit.setOnClickListener(v -> {
+            try{
+                int id;
+                id = signal.getCheckedRadioButtonId();
+                RadioButton selected = findViewById(id);
+                signaloption = selected.getText().toString();
+            }catch (Exception e){
+                Toast.makeText(ProvideSignal.this, "Please select action", Toast.LENGTH_SHORT).show();
+            }
 
-                    addSignal();
 
-                    Toast.makeText(ProvideSignal.this, "Signal updated!!!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                else{
-                    Toast.makeText(ProvideSignal.this, "Please fill all the info!!!", Toast.LENGTH_SHORT).show();
-                }
+            takep1 = tp1.getText().toString();
+            takep2 = tp2.getText().toString();
+            stopl = sl.getText().toString();
+            open_price = current_value.getText().toString();
+            pair_name = pair_nametv.getText().toString();
+
+            if(!(TextUtils.isEmpty(takep1) || TextUtils.isEmpty(takep2) || TextUtils.isEmpty(stopl) || TextUtils.isEmpty(signaloption))){
+
+                addSignal();
+
+                Toast.makeText(ProvideSignal.this, "Signal updated!!!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            else{
+                Toast.makeText(ProvideSignal.this, "Please fill all the info!!!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -119,11 +116,24 @@ public class ProvideSignal extends AppCompatActivity {
         admin_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 PairBundle pairBundle = snapshot.child(pair_nametv.getText().toString()).getValue(PairBundle.class);
-                tp1.setText(pairBundle.getTake_profit_1());
-                tp2.setText(pairBundle.getTake_profit_2());
-                sl.setText(pairBundle.getStop_loss());
-                current_value.setText(pairBundle.getOpen_price());
+                if(!pairBundle.getTake_profit_1().equals("null")){
+
+                    tp1.setText(pairBundle.getTake_profit_1());
+                    tp2.setText(pairBundle.getTake_profit_2());
+                    sl.setText(pairBundle.getStop_loss());
+                    current_value.setText(pairBundle.getOpen_price());
+                }
+                else{
+
+                    tp1.setText("");
+                    tp2.setText("");
+                    sl.setText("");
+                    current_value.setText("");
+                }
+
+
                 if(pairBundle.getPair_action().equals("BUY")){
 
                     signal.check(R.id.buy_option_id);
@@ -152,10 +162,9 @@ public class ProvideSignal extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -165,24 +174,5 @@ public class ProvideSignal extends AppCompatActivity {
         return true;
     }
 
-
-    private void getData(){
-
-        Call<CurrencyConverter> converted = DataAPI.getConverterScrvice().getPearValue();
-        converted.enqueue(new Callback<CurrencyConverter>() {
-            @Override
-            public void onResponse(Call<CurrencyConverter> call, Response<CurrencyConverter> response) {
-                CurrencyConverter converter = response.body();
-                Toast.makeText(ProvideSignal.this, "sucess", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<CurrencyConverter> call, Throwable t) {
-
-                Toast.makeText(ProvideSignal.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
 
 }
