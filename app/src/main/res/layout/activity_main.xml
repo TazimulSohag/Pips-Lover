@@ -58,6 +58,7 @@
             <TextView
                 android:id="@+id/paer_msg"
                 android:layout_below="@id/new_paer_btn"
+                android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
