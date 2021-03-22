@@ -19,6 +19,10 @@
         android:id="@+id/chart"
         android:icon="@drawable/chart_icon"
         android:title="@string/chart" />
+    <item
+        android:id="@+id/referd_monitor"
+        android:title="@string/referd_monitor"
+        android:icon="@drawable/refer_icon"/>
 
     <item
         android:id="@+id/privecy"
