@@ -1,0 +1,244 @@
+<html>
+<head>
+<title>Login.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Login.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">co.banglabs.pips_lover.activity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.annotation.RequiresApi</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.app.AlertDialog</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.DialogInterface</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.SharedPreferences</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Build</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.text.TextUtils</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Patterns</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.OnCompleteListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.OnFailureListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.OnSuccessListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.Task</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.AuthResult</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.IOException</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.security.GeneralSecurityException</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">co.banglabs.pips_lover.R</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Login </span><span class="s0">extends </span><span class="s1">AppCompatActivity </span><span class="s0">implements </span><span class="s1">View.OnClickListener {</span>
+
+    <span class="s0">private </span><span class="s1">EditText logName</span><span class="s0">, </span><span class="s1">logPassword</span><span class="s0">;</span>
+    <span class="s1">TextView goto_reg</span><span class="s0">, </span><span class="s1">forgot_pass</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Button login_btn</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">FirebaseAuth mAuth</span><span class="s0">;</span>
+    <span class="s1">SharedPreferences sharedPref</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_login)</span><span class="s0">;</span>
+
+        <span class="s1">sharedPref = getSharedPreferences(String.valueOf(R.string.login_info)</span><span class="s0">, </span><span class="s1">MODE_PRIVATE)</span><span class="s0">;</span>
+        <span class="s0">try</span><span class="s1">{</span>
+            <span class="s2">//Toast.makeText(this, sharedPref.getString(String.valueOf(R.string.login_email), &quot;default&quot;), Toast.LENGTH_SHORT).show();</span>
+            <span class="s0">if</span><span class="s1">(sharedPref.contains(String.valueOf(R.string.login_email)) &amp;&amp; sharedPref.contains(String.valueOf(R.string.login_password))){</span>
+                <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(Login.</span><span class="s0">this, </span><span class="s1">MainActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">startActivity(intent)</span><span class="s0">;</span>
+                <span class="s2">//Toast.makeText(this, &quot;sending&quot;, Toast.LENGTH_SHORT).show();</span>
+                <span class="s1">finish()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">else</span><span class="s1">{</span>
+                <span class="s2">//Toast.makeText(this, &quot;else&quot;, Toast.LENGTH_SHORT).show();</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span><span class="s0">catch </span><span class="s1">(Exception E){</span>
+            <span class="s2">//Toast.makeText(this, &quot;error found&quot;, Toast.LENGTH_SHORT).show();</span>
+        <span class="s1">}</span>
+
+        <span class="s1">mAuth = FirebaseAuth.getInstance()</span><span class="s0">;</span>
+        <span class="s1">logName = findViewById(R.id.reg_name_et)</span><span class="s0">;</span>
+        <span class="s1">logPassword = findViewById(R.id.reg_password_et)</span><span class="s0">;</span>
+        <span class="s1">goto_reg = findViewById(R.id.goto_reg_page_id)</span><span class="s0">;</span>
+        <span class="s1">forgot_pass = findViewById(R.id.forgot_id)</span><span class="s0">;</span>
+        <span class="s1">login_btn = findViewById(R.id.login_btn_id)</span><span class="s0">;</span>
+
+
+        <span class="s1">login_btn.setOnClickListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">goto_reg.setOnClickListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">forgot_pass.setOnClickListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+        <span class="s0">if</span><span class="s1">(v.getId()==R.id.goto_reg_page_id){</span>
+            <span class="s2">//Toast.makeText(this, &quot;ok&quot;, Toast.LENGTH_SHORT).show();</span>
+
+            <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(Login.</span><span class="s0">this, </span><span class="s1">Registration.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">startActivity(intent)</span><span class="s0">;</span>
+            <span class="s1">finish()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">else if</span><span class="s1">(v.getId()==R.id.forgot_id){</span>
+
+            <span class="s0">final </span><span class="s1">EditText resetMail = </span><span class="s0">new </span><span class="s1">EditText(v.getContext())</span><span class="s0">;</span>
+            <span class="s0">final </span><span class="s1">AlertDialog.Builder passwordResetDialog = </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(v.getContext())</span><span class="s0">;</span>
+            <span class="s1">passwordResetDialog.setTitle(</span><span class="s3">&quot;Reset Password ?&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">passwordResetDialog.setMessage(</span><span class="s3">&quot;Enter Your Login Email To receive Password Reset mail&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">passwordResetDialog.setView(resetMail)</span><span class="s0">;</span>
+            <span class="s1">passwordResetDialog.setPositiveButton(</span><span class="s3">&quot;Yes&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+                <span class="s1">@Override</span>
+                <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">which) {</span>
+                    <span class="s1">String mail=</span><span class="s3">&quot;&quot;</span><span class="s0">;</span>
+                    <span class="s0">if</span><span class="s1">(!TextUtils.isEmpty(resetMail.getText())){</span>
+                        <span class="s1">mail = resetMail.getText().toString()</span><span class="s0">;</span>
+                        <span class="s1">mAuth.sendPasswordResetEmail(mail).addOnSuccessListener(</span><span class="s0">new </span><span class="s1">OnSuccessListener&lt;Void&gt;() {</span>
+                            <span class="s1">@Override</span>
+                            <span class="s0">public void </span><span class="s1">onSuccess(Void aVoid) {</span>
+                                <span class="s1">Toast.makeText(Login.</span><span class="s0">this, </span><span class="s3">&quot;An Email has been send to your email&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                            <span class="s1">}</span>
+                        <span class="s1">}).addOnFailureListener(</span><span class="s0">new </span><span class="s1">OnFailureListener() {</span>
+                            <span class="s1">@Override</span>
+                            <span class="s0">public void </span><span class="s1">onFailure(@NonNull Exception e) {</span>
+                                <span class="s1">Toast.makeText(Login.</span><span class="s0">this, </span><span class="s3">&quot;Email can't be send&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                            <span class="s1">}</span>
+                        <span class="s1">})</span><span class="s0">;</span>
+
+                    <span class="s1">}</span>
+                    <span class="s0">else</span><span class="s1">{</span>
+                        <span class="s1">resetMail.setError(</span><span class="s3">&quot;Enter an Email Aaddress&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+
+                <span class="s1">}</span>
+            <span class="s1">})</span><span class="s0">;</span>
+            <span class="s1">passwordResetDialog.setNeutralButton(</span><span class="s3">&quot;Cancle&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+                <span class="s1">@Override</span>
+                <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">which) {</span>
+
+                <span class="s1">}</span>
+            <span class="s1">})</span><span class="s0">;</span>
+            <span class="s1">passwordResetDialog.setCancelable(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">passwordResetDialog.create().show()</span><span class="s0">;</span>
+
+        <span class="s1">}</span>
+
+        <span class="s0">else</span><span class="s1">{</span>
+
+            <span class="s1">userLogin()</span><span class="s0">;</span>
+
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">userLogin() {</span>
+
+        <span class="s1">String email</span><span class="s0">, </span><span class="s1">password</span><span class="s0">;</span>
+
+        <span class="s1">email = logName.getText().toString().trim()</span><span class="s0">;</span>
+        <span class="s1">password = logPassword.getText().toString().trim()</span><span class="s0">;</span>
+
+        <span class="s0">if</span><span class="s1">(email.isEmpty()){</span>
+
+            <span class="s1">logName.setError(</span><span class="s3">&quot;Enter an Email address&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">logName.requestFocus()</span><span class="s0">;</span>
+            <span class="s0">return;</span>
+
+        <span class="s1">}</span>
+        <span class="s0">if</span><span class="s1">(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){</span>
+
+
+            <span class="s1">logName.setError(</span><span class="s3">&quot;Enter a valid Email address&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">logName.requestFocus()</span><span class="s0">;</span>
+            <span class="s0">return;</span>
+
+        <span class="s1">}</span>
+        <span class="s0">if</span><span class="s1">(password.isEmpty()){</span>
+
+            <span class="s1">logPassword.setError(</span><span class="s3">&quot;Enter an password&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">logPassword.requestFocus()</span><span class="s0">;</span>
+            <span class="s0">return;</span>
+
+        <span class="s1">}</span>
+        <span class="s0">if</span><span class="s1">(password.length()&lt;</span><span class="s4">6</span><span class="s1">){</span>
+
+            <span class="s1">logPassword.setError(</span><span class="s3">&quot;Enter an strong&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">logPassword.requestFocus()</span><span class="s0">;</span>
+            <span class="s0">return;</span>
+
+        <span class="s1">}</span>
+
+        <span class="s1">mAuth.signInWithEmailAndPassword(email</span><span class="s0">, </span><span class="s1">password).addOnCompleteListener(</span><span class="s0">new </span><span class="s1">OnCompleteListener&lt;AuthResult&gt;() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onComplete(@NonNull Task&lt;AuthResult&gt; task) {</span>
+
+                <span class="s0">if </span><span class="s1">(task.isSuccessful()) {</span>
+                    <span class="s2">// Sign in success, update UI with the signed-in user's information</span>
+                    <span class="s0">if </span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.M) {</span>
+                        <span class="s0">try </span><span class="s1">{</span>
+                            <span class="s1">saveData()</span><span class="s0">;</span>
+                        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(GeneralSecurityException e) {</span>
+                            <span class="s1">e.printStackTrace()</span><span class="s0">;</span>
+                        <span class="s1">} </span><span class="s0">catch </span><span class="s1">(IOException e) {</span>
+                            <span class="s1">e.printStackTrace()</span><span class="s0">;</span>
+                        <span class="s1">}</span>
+                    <span class="s1">}</span>
+
+                    <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(Login.</span><span class="s0">this, </span><span class="s1">MainActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">startActivity(intent)</span><span class="s0">;</span>
+                    <span class="s1">finish()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s2">// If sign in fails, display a message to the user.</span>
+                    <span class="s1">logName.requestFocus()</span><span class="s0">;</span>
+                    <span class="s1">Toast.makeText(Login.</span><span class="s0">this, </span><span class="s3">&quot;Email or password is not match.&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">@RequiresApi(api = Build.VERSION_CODES.M)</span>
+    <span class="s0">private void </span><span class="s1">saveData() </span><span class="s0">throws </span><span class="s1">GeneralSecurityException</span><span class="s0">, </span><span class="s1">IOException {</span>
+
+        <span class="s2">/*String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC); 
+ 
+        SharedPreferences sharedPreferences = EncryptedSharedPreferences.create( 
+                &quot;secret_shared_prefs&quot;, 
+                masterKeyAlias, 
+                getApplicationContext(), 
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV, 
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM 
+        );*/</span>
+
+        <span class="s1">SharedPreferences.Editor editor = getSharedPreferences(String.valueOf(R.string.login_info)</span><span class="s0">, </span><span class="s1">MODE_PRIVATE).edit()</span><span class="s0">;</span>
+        <span class="s1">editor.putString(String.valueOf(R.string.login_email)</span><span class="s0">, </span><span class="s1">logName.getText().toString())</span><span class="s0">;</span>
+        <span class="s1">editor.putString(String.valueOf(R.string.login_password)</span><span class="s0">, </span><span class="s1">logPassword.getText().toString())</span><span class="s0">;</span>
+        <span class="s1">editor.apply()</span><span class="s0">;</span>
+        <span class="s2">//Toast.makeText(this, sharedPref.getString(String.valueOf(R.string.login_email), &quot;default&quot;), Toast.LENGTH_SHORT).show();</span>
+
+    <span class="s1">}</span>
+
+<span class="s1">}</span></pre>
+</body>
+</html>

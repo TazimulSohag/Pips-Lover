@@ -6,26 +6,19 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/pips_lover_icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/pips_lover_icon_round"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PipsLover">
-        <activity android:name=".activity.ChartActivity"
-            android:theme="@style/Theme.MaterialComponents.Light"
-            >
-        </activity>
 
-        <activity android:name=".activity.PrivacyPolicy"
-            android:theme="@style/Theme.MaterialComponents.Light"
-            >
-        </activity>
-
-
+        <activity android:name=".activity.PrivacyPolicy"/>
+        <activity android:name=".activity.RiskRatioActivity"/>
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.ReferenceMonitorActivity"/>
+        <activity android:name=".activity.ChartActivity" />
         <activity android:name=".activity.Registration" />
-        <activity
-            android:name=".activity.ProvideSignal"
-            android:theme="@style/Theme.MaterialComponents.Light" />
+        <activity android:name=".activity.ProvideSignal" />
         <activity android:name=".activity.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

@@ -8,22 +8,21 @@ import android.view.MenuItem;
 
 import co.banglabs.pips_lover.R;
 
-public class PrivacyPolicy extends AppCompatActivity {
-
+public class RiskRatioActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_privacy_policy);
+        setContentView(R.layout.activity_risk_ratio);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_privecy);
+        Toolbar toolbar = findViewById(R.id.toolbar_riskratio);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //toolbar.setTitle("Privacy & Policy");
-
 
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -34,6 +33,4 @@ public class PrivacyPolicy extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

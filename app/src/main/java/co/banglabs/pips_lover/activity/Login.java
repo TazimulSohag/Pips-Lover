@@ -1,18 +1,13 @@
 package co.banglabs.pips_lover.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -20,15 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 import co.banglabs.pips_lover.R;
 
@@ -36,7 +24,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
     private EditText logName, logPassword;
     TextView goto_reg, forgot_pass;
-    private Button login_btn;
     private FirebaseAuth mAuth;
     SharedPreferences sharedPref;
 
@@ -54,9 +41,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 //Toast.makeText(this, "sending", Toast.LENGTH_SHORT).show();
                 finish();
             }
-            else{
-                //Toast.makeText(this, "else", Toast.LENGTH_SHORT).show();
-            }
+            //Toast.makeText(this, "else", Toast.LENGTH_SHORT).show();
+
         }catch (Exception E){
             //Toast.makeText(this, "error found", Toast.LENGTH_SHORT).show();
         }
@@ -66,7 +52,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         logPassword = findViewById(R.id.reg_password_et);
         goto_reg = findViewById(R.id.goto_reg_page_id);
         forgot_pass = findViewById(R.id.forgot_id);
-        login_btn = findViewById(R.id.login_btn_id);
+        Button login_btn = findViewById(R.id.login_btn_id);
 
 
         login_btn.setOnClickListener(this);
@@ -90,36 +76,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             passwordResetDialog.setTitle("Reset Password ?");
             passwordResetDialog.setMessage("Enter Your Login Email To receive Password Reset mail");
             passwordResetDialog.setView(resetMail);
-            passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String mail="";
-                    if(!TextUtils.isEmpty(resetMail.getText())){
-                        mail = resetMail.getText().toString();
-                        mAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(Login.this, "An Email has been send to your email", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Login.this, "Email can't be send", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                    }
-                    else{
-                        resetMail.setError("Enter an Email Aaddress");
-                    }
+            passwordResetDialog.setPositiveButton("Yes", (dialog, which) -> {
+                String mail;
+                if(!TextUtils.isEmpty(resetMail.getText())){
+                    mail = resetMail.getText().toString();
+                    mAuth.sendPasswordResetEmail(mail).addOnSuccessListener(aVoid -> Toast.makeText(Login.this, "An Email has been send to your email", Toast.LENGTH_SHORT).show()).addOnFailureListener(e -> Toast.makeText(Login.this, "Email can't be send", Toast.LENGTH_SHORT).show());
 
                 }
+                else{
+                    resetMail.setError("Enter an Email Aaddress");
+                }
+
             });
-            passwordResetDialog.setNeutralButton("Cancle", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+            passwordResetDialog.setNeutralButton("Cancle", (dialog, which) -> {
 
-                }
             });
             passwordResetDialog.setCancelable(true);
             passwordResetDialog.create().show();
@@ -171,47 +141,29 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         }
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
 
-                if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        try {
-                            saveData();
-                        } catch (GeneralSecurityException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    Intent intent = new Intent(Login.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // If sign in fails, display a message to the user.
-                    logName.requestFocus();
-                    Toast.makeText(Login.this, "Email or password is not match.", Toast.LENGTH_SHORT).show();
+            if (task.isSuccessful()) {
+                // Sign in success, update UI with the signed-in user's information
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    saveData();
                 }
+
+                Intent intent = new Intent(Login.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                // If sign in fails, display a message to the user.
+                logName.requestFocus();
+                Toast.makeText(Login.this, "Email or password is not match.", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void saveData() throws GeneralSecurityException, IOException {
 
-        /*String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
+    private void saveData()  {
 
-        SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(
-                "secret_shared_prefs",
-                masterKeyAlias,
-                getApplicationContext(),
-                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        );*/
 
         SharedPreferences.Editor editor = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE).edit();
         editor.putString(String.valueOf(R.string.login_email), logName.getText().toString());

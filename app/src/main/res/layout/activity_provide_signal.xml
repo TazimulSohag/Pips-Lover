@@ -4,183 +4,263 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backgroundtwo"
     tools:context=".activity.ProvideSignal">
 
-
-
-    <TextView
-        android:id="@+id/minas"
-        android:layout_below="@+id/option_section"
-        android:textColor="@color/blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="55dp"
-        android:padding="5dp"
-        android:text="-"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-    <TextView
-        android:id="@+id/plus"
-        android:layout_below="@+id/option_section"
-        android:textColor="@color/blue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="55dp"
-        android:padding="5dp"
-        android:layout_alignParentEnd="true"
-        android:text="+"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-
-    <TextView
-        android:id="@+id/pair_name_id"
-        android:textColor="@color/blue"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Pair Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-    <EditText
-        android:id="@+id/current_value"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/pair_name_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="1.25455"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-    <LinearLayout
-        android:id="@+id/option_section"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_provide_signal"
+        app:title="Provide Signal"
+        app:titleTextColor="@color/white"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_below="@id/current_value"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="50dp" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_below="@id/toolbar_provide_signal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Signal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:alpha=".5"
+            android:background="@drawable/background_fade">
 
-        <RadioGroup
-            android:id="@+id/action_group_id"
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/pair_name_id"
+            android:textColor="@color/white"
+            android:layout_marginTop="20dp"
+            android:textSize="22sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Pair Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+        <LinearLayout
+            android:layout_below="@id/pair_name_id"
+            android:id="@+id/current_value_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:baselineAligned="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:id="@+id/buy_option_id"
-                android:textColor="@color/green"
+            android:gravity="center"
+            android:paddingHorizontal="20dp">
+
+            <TextView
+                android:textSize="20sp"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BUY"/>
-            <RadioButton
-                android:id="@+id/sell_option_id"
-                android:textColor="@color/red"
+                android:layout_centerHorizontal="true"
+                android:text="Current Rate"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+
+
+            <EditText
+                android:id="@+id/current_value"
+                android:layout_below="@id/pair_name_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:background="@drawable/edit_style"
+                style="@style/Font_family_light"
+                android:drawableLeft="@drawable/money_icon"
+                android:inputType="text"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="@dimen/padding_16"
+                android:layout_marginTop="@dimen/margin_top_8"
+                android:layout_marginBottom="@dimen/margin_top_8"
+                android:layout_marginLeft="@dimen/margin_right_16"
+                android:layout_marginRight="@dimen/margin_right_16"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/text_20"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/option_section"
+            android:layout_width="match_parent"
+            android:paddingHorizontal="20dp"
+            android:layout_below="@id/current_value_section"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Signal"
+                android:layout_marginRight="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <RadioGroup
+                android:id="@+id/action_group_id"
+                android:orientation="horizontal"
+                android:baselineAligned="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/buy_option_id"
+                    android:textColor="@color/green"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BUY"/>
+                <RadioButton
+                    android:id="@+id/sell_option_id"
+                    android:textSize="20sp"
+                    android:textColor="@color/red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SELL"/>
+
+
+            </RadioGroup>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tp1_section"
+            android:layout_below="@+id/option_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="20dp">
+            <TextView
+                android:textSize="20sp"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SELL"/>
+                android:text="TP-1"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            <EditText
+                android:id="@+id/tp1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:background="@drawable/edit_style"
+                style="@style/Font_family_light"
+                android:drawableLeft="@drawable/money_icon"
+                android:inputType="text"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="@dimen/padding_16"
+                android:layout_marginTop="@dimen/margin_top_8"
+                android:layout_marginBottom="@dimen/margin_top_8"
+                android:layout_marginLeft="@dimen/margin_right_16"
+                android:layout_marginRight="@dimen/margin_right_16"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/text_20" />
 
+        </LinearLayout>
 
-        </RadioGroup>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/tp1_section"
-        android:layout_marginVertical="10dp"
-        android:layout_below="@+id/option_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingHorizontal="20dp">
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/tp2_section"
+            android:layout_below="@+id/tp1_section"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TP-1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-        <EditText
-            android:id="@+id/tp1"
-            android:layout_width="150dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="20dp">
+            <TextView
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TP-2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            <EditText
+                android:id="@+id/tp2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:background="@drawable/edit_style"
+                style="@style/Font_family_light"
+                android:drawableLeft="@drawable/money_icon"
+                android:inputType="text"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="@dimen/padding_16"
+                android:layout_marginTop="@dimen/margin_top_8"
+                android:layout_marginBottom="@dimen/margin_top_8"
+                android:layout_marginLeft="@dimen/margin_right_16"
+                android:layout_marginRight="@dimen/margin_right_16"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/text_20"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sl1_section"
+            android:layout_below="@+id/tp2_section"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:layout_marginLeft="10dp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="0dp"
-            android:hint="1.2345"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingHorizontal="20dp">
+            <TextView
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SL    "
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            <EditText
+                android:id="@+id/sl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/padding_16"
+                android:background="@drawable/edit_style"
+                style="@style/Font_family_light"
+                android:drawableLeft="@drawable/money_icon"
+                android:inputType="text"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="@dimen/padding_16"
+                android:layout_marginTop="@dimen/margin_top_8"
+                android:layout_marginBottom="@dimen/margin_top_8"
+                android:layout_marginLeft="@dimen/margin_right_16"
+                android:layout_marginRight="@dimen/margin_right_16"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/text_20"/>
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/tp2_section"
-        android:layout_marginVertical="10dp"
-        android:layout_below="@+id/tp1_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingHorizontal="20dp">
-        <TextView
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/submit_btn_id"
+            style="@style/Font_family_regular"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TP-2"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-        <EditText
-            android:id="@+id/tp2"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:layout_marginLeft="10dp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="0dp"
-            android:hint="1.2345"/>
+            android:layout_marginTop="@dimen/margin_top_8"
+            android:layout_marginBottom="@dimen/margin_top_8"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:background="@drawable/red_style"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_20"
+            android:layout_below="@id/sl1_section"
+            android:layout_centerHorizontal="true"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/sl1_section"
-        android:layout_marginVertical="10dp"
-        android:layout_below="@+id/tp2_section"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:paddingHorizontal="20dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SL"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-        <EditText
-            android:id="@+id/sl"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:layout_marginLeft="10dp"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="0dp"
-            android:hint="1.2345"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
-    <Button
-        android:id="@+id/submit_btn_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Widget.Button"
-        android:text="Submit"
-        android:textColor="@color/white"
-        android:layout_below="@id/sl1_section"
-        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

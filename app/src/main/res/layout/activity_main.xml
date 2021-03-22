@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6F6"
     tools:context=".activity.MainActivity"
-    android:id="@+id/drawerlayout_id">
+    android:id="@+id/drawerlayout_id"
+    >
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/backgroundtwo">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            app:title="Pips Lover"
+            app:title="Custom Navigation"
             app:titleTextColor="@color/white"
-            android:background="@color/blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -25,6 +25,14 @@
             android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha=".5"
+                android:background="@drawable/background_fade">
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/timer"
@@ -50,6 +58,7 @@
             <TextView
                 android:id="@+id/paer_msg"
                 android:layout_below="@id/new_paer_btn"
+                android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
