@@ -61,7 +61,15 @@ public class PairAdapter extends ArrayAdapter {
         PairBundle pairBundle = pairlist.get(position);
         name.setText(pairBundle.getPair_name());
         statas.setText(pairBundle.getPair_statas());
-        current_position.setText(pairBundle.getTrade_result());
+        if(pairBundle.getTrade_result().equals("Expired")){
+            current_position.setVisibility(View.VISIBLE);
+            current_position.setTextColor(Color.RED);
+            current_position.setText(pairBundle.getTrade_result());
+        }else{
+            current_position.setVisibility(View.GONE);
+        }
+
+
         pswitch.setText(pairBundle.getPair_action());
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
