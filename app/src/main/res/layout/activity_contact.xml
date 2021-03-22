@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundtwo"
+    android:fitsSystemWindows="true"
+    tools:context=".activity.ContactActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_contact"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:title="Contact"
+        app:titleTextColor="@color/white" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_contact">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha=".5"
+            android:background="@drawable/background_fade">
+
+        </FrameLayout>
+
+
+        <EditText
+            android:id="@+id/feedback_email_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/rounded_border_white"
+            android:hint="Enter your Email"
+            android:padding="5dp"
+            android:textSize="22sp" />
+
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/feedback_email_id"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/rounded_border_white">
+
+            <EditText
+                android:id="@+id/user_revew_box_id"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="This app is ..."
+                android:textSize="22sp" />
+
+        </ScrollView>
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"
+        android:weightSum="2"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/clear_btn_id"
+            style="@style/Widget.AppCompat.Light.ActionButton"
+            android:background="@drawable/rounded_border_blank"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:text="Clear"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/send_btn_id"
+            style="@style/Widget.AppCompat.Light.ActionButton"
+            android:background="@drawable/rounded_border_blank"
+            android:layout_marginHorizontal="10dp"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:text="Send"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>
