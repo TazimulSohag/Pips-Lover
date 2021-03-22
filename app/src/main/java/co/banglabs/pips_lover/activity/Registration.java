@@ -165,17 +165,18 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
 
                             try{
+                                Log.d("referror", "1");
                                 user_reference.child(name).setValue(userBundle);
-
-                                String histroy_val = String.valueOf(token_snapshot.child(user_token).child("history").getValue(String.class));
-                                String recent_val =  String.valueOf(token_snapshot.child(user_token).child("recent").getValue(String.class));
-
+                                Log.d("referror", "2");
+                                String histroy_val = String.valueOf(token_snapshot.child(user_token).child("total_users").getValue(String.class));
+                                String recent_val =  String.valueOf(token_snapshot.child(user_token).child("new_users").getValue(String.class));
+                                Log.d("referror", "3");
                                 histroy_val = String.valueOf(Integer.parseInt(histroy_val)+1);
                                 recent_val = String.valueOf(Integer.parseInt(recent_val)+1);
-
-                                token_reference.child(user_token).child("history").setValue(histroy_val);
-                                token_reference.child(user_token).child("recent").setValue(recent_val);
-
+                                Log.d("referror", "4");
+                                token_reference.child(user_token).child("total_users").setValue(histroy_val);
+                                token_reference.child(user_token).child("new_users").setValue(recent_val);
+                                Log.d("referror", "5");
                                 Intent intent = new Intent(Registration.this, Login.class);
                                 startActivity(intent);
 
