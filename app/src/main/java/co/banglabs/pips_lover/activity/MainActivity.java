@@ -79,17 +79,16 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     /*SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);*/
 
-    //String defaultValue = getResources().getInteger(R.integer.saved_high_score_default_key);
-    /*String log_pass = sharedPref.getString(getString(R.string.login_password), " ");
-    String log_name = sharedPref.getString(getString(R.string.login_email), " ");*/
 
     @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        Log.d("click"," start ");
 
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -106,11 +105,10 @@ public class MainActivity extends AppCompatActivity {
         schedule_reference = FirebaseDatabase.getInstance().getReference("scheduler");
 
 
-
-
-
         if (user != null) {
             user_info_reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(user.getUid());
+
+            Log.d("click","ok");
 
             navigationView = (NavigationView) findViewById(R.id.navmenu);
             View headerView = navigationView.getHeaderView(0);
@@ -118,13 +116,13 @@ public class MainActivity extends AppCompatActivity {
             navEmail = (TextView) headerView.findViewById(R.id.user_mail_id);
 
 
-
-
         } else {
+
+            Log.d("click"," not ok");
 
             // No user is signed in
         }
-        
+
 
         pair_list = new ArrayList<>();
 
@@ -247,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
 
         //database methods
 
-        user_info_reference.addValueEventListener(new ValueEventListener() {
+        /*user_info_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -260,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-        });
+        });*/
 
 
         admin_reference.addValueEventListener(new ValueEventListener() {
