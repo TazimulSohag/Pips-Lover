@@ -15,7 +15,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            app:title="Custom Navigation"
+            app:title="Home"
             app:titleTextColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/red"
+                android:textColor="@color/audio_background"
                 android:text="24-04-2021"
                 tools:layout_editor_absoluteX="328dp"
                 tools:layout_editor_absoluteY="22dp" />
@@ -86,7 +86,6 @@
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
-
         android:layout_height="match_parent"
         android:id="@+id/navmenu"
         app:menu="@menu/navigation_menu"

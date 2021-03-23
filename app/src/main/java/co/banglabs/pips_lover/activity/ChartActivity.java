@@ -40,7 +40,6 @@ public class ChartActivity extends AppCompatActivity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_chart);
 
         Toolbar toolbar = findViewById(R.id.toolbar_chart);
