@@ -88,6 +88,6 @@
     <string name="login_info">login_info</string>
     <string name="chart">Weekly Chart</string>
     <string name="logout">Log Out</string>
-    <string name="referd_monitor">Referd Monitor</string>
+    <string name="referd_monitor">Reference Monitor</string>
 
 </resources>

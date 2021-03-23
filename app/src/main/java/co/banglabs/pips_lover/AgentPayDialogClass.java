@@ -11,20 +11,23 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class CustomDialogClass extends Dialog implements android.view.View.OnClickListener {
+public class AgentPayDialogClass extends Dialog implements android.view.View.OnClickListener{
+
 
     public Activity c;
     public Dialog d;
     public Button yes, no;
-    String chield;
-    TextView message;
-    DatabaseReference pair_reference;
+    String agent_Token, agent_name, new_users;
+    TextView message, message2;
+    DatabaseReference token_reference;
 
-    public CustomDialogClass(Activity a, String chield) {
+    public AgentPayDialogClass(Activity a, String agent_Token, String agent_name, String new_users) {
         super(a);
         // TODO Auto-generated constructor stub
         this.c = a;
-        this.chield = chield;
+        this.agent_Token = agent_Token;
+        this.agent_name =agent_name;
+        this.new_users = new_users;
     }
 
     @Override
@@ -32,9 +35,12 @@ public class CustomDialogClass extends Dialog implements android.view.View.OnCli
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.custom_dialog);
+        setContentView(R.layout.agent_pay_dialog);
         message = findViewById(R.id.message_id);
-        message.setText(chield+" ?");
+        message2 = findViewById(R.id.message_id2);
+        message.setText(agent_name);
+        message2.setText(new_users);
+
         yes = (Button) findViewById(R.id.btn_yes);
         no = (Button) findViewById(R.id.btn_no);
         yes.setOnClickListener(this);
@@ -49,8 +55,8 @@ public class CustomDialogClass extends Dialog implements android.view.View.OnCli
 
                 try{
 
-                    pair_reference = FirebaseDatabase.getInstance().getReference("PairList").child(chield);
-                    pair_reference.removeValue();
+                    token_reference = FirebaseDatabase.getInstance().getReference("Reference").child(agent_Token);
+                    token_reference.child("new_users").setValue("0");
                 }catch (Exception e){
 
                 }
@@ -63,4 +69,5 @@ public class CustomDialogClass extends Dialog implements android.view.View.OnCli
         }
         dismiss();
     }
+
 }

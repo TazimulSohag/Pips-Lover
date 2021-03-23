@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -31,6 +34,8 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
 import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,6 +63,7 @@ import de.hdodenhof.circleimageview.BuildConfig;
 public class MainActivity extends AppCompatActivity {
 
     NavigationView navigationView;
+    TextView navUsername, navEmail;
     ActionBarDrawerToggle actionBarDrawerToggle;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
@@ -66,10 +72,11 @@ public class MainActivity extends AppCompatActivity {
     String currentDateandTime;
     Button add_item;
     ListView pairs;
-    DatabaseReference pair_reference, admin_reference, schedule_reference, statistics_reference;
+    DatabaseReference pair_reference, admin_reference, schedule_reference, statistics_reference, user_info_reference;
     DataSnapshot admin_snapshot, pair_snapshot, statistics_snapshot;
     List<PairBundle> pair_list;
     TextView timer_view;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     /*SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);*/
 
     //String defaultValue = getResources().getInteger(R.integer.saved_high_score_default_key);
@@ -80,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
 
@@ -88,12 +97,34 @@ public class MainActivity extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(this);
         timer_view = findViewById(R.id.timer);
+        timer_view.setText(currentDateandTime);
 
         admin_reference = FirebaseDatabase.getInstance().getReference("PairList");
         statistics_reference = FirebaseDatabase.getInstance().getReference("Statistics");
         //date_reference = FirebaseDatabase.getInstance().getReference().child("UpdateDate");
         pair_reference = FirebaseDatabase.getInstance().getReference("Pairs").child(currentDateandTime);
         schedule_reference = FirebaseDatabase.getInstance().getReference("scheduler");
+
+
+
+
+
+        if (user != null) {
+            user_info_reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(user.getUid());
+
+            navigationView = (NavigationView) findViewById(R.id.navmenu);
+            View headerView = navigationView.getHeaderView(0);
+            navUsername = (TextView) headerView.findViewById(R.id.user_name_id);
+            navEmail = (TextView) headerView.findViewById(R.id.user_mail_id);
+
+
+
+
+        } else {
+
+            // No user is signed in
+        }
+        
 
         pair_list = new ArrayList<>();
 
@@ -202,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.logout:
                     SharedPreferences preferences = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
                     preferences.edit().clear().apply();
+                    FirebaseAuth.getInstance().signOut();
                     intent = new Intent(MainActivity.this, Login.class);
                     startActivity(intent);
                     finish();
@@ -214,6 +246,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         //database methods
+
+        user_info_reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                navEmail.setText(snapshot.child("email").getValue(String.class));
+                navUsername.setText(snapshot.child("name").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         admin_reference.addValueEventListener(new ValueEventListener() {

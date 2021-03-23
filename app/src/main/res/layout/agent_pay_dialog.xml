@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="200dp"
+    android:background="@drawable/backgroundtwo"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".5"
+        android:background="@drawable/background_fade">
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You are paying "
+                android:textColor="@android:color/white"
+                android:textSize="16dp"
+                android:textStyle="normal"/>
+            <TextView
+                android:id="@+id/message_id"
+                android:layout_marginHorizontal="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Anisul "
+                android:textColor="#FA5F5F"
+                android:textSize="@dimen/text_20"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="@color/white"
+                android:text="for "
+                android:textSize="18dp"
+                android:textStyle="normal"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/message_id2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45 "
+                android:layout_marginRight="5dp"
+                android:textColor="#FA5F5F"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Users "
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="normal"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:padding="5dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btn_no"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@android:color/white"
+                android:clickable="true"
+                android:text="Cancle"
+                android:textSize="20sp"
+                android:textColor="#5DBCD2"
+                android:textStyle="normal"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:id="@+id/btn_yes"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="20sp"
+                android:background="@android:color/white"
+                android:clickable="true"
+                android:text="Confirm"
+                android:textAllCaps="false"
+                android:textColor="#5DBCD2"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

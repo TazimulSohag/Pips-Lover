@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -72,6 +75,10 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_registration);
 
 
@@ -162,21 +169,29 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     if (task.isSuccessful()) {
 
                         UserBundle userBundle = new UserBundle(name, email, user_token);
-
-
                             try{
-                                Log.d("referror", "1");
-                                user_reference.child(name).setValue(userBundle);
-                                Log.d("referror", "2");
+
+                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                /*if (user != null) {
+                                    // User is signed in
+                                    user.sendEmailVerification();
+                                    Toast.makeText(this, "An email has been send to your account", Toast.LENGTH_SHORT).show();
+
+                                } else {
+
+                                }*/
+
+                                user_reference.child(user.getUid()).setValue(userBundle);
+
                                 String histroy_val = String.valueOf(token_snapshot.child(user_token).child("total_users").getValue(String.class));
                                 String recent_val =  String.valueOf(token_snapshot.child(user_token).child("new_users").getValue(String.class));
-                                Log.d("referror", "3");
+
                                 histroy_val = String.valueOf(Integer.parseInt(histroy_val)+1);
                                 recent_val = String.valueOf(Integer.parseInt(recent_val)+1);
-                                Log.d("referror", "4");
+
                                 token_reference.child(user_token).child("total_users").setValue(histroy_val);
                                 token_reference.child(user_token).child("new_users").setValue(recent_val);
-                                Log.d("referror", "5");
+
                                 Intent intent = new Intent(Registration.this, Login.class);
                                 startActivity(intent);
 

@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/pips_lover_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PipsLover">
-        <activity android:name=".activity.ContactActivity" />
+        <activity android:name=".activity.ContactActivity"
+            />
         <activity android:name=".activity.PrivacyPolicy" />
         <activity android:name=".activity.RiskRatioActivity" />
         <activity android:name=".activity.ProfileActivity" />

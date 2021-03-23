@@ -2,6 +2,7 @@ package co.banglabs.pips_lover.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import java.util.List;
+
+import co.banglabs.pips_lover.AgentPayDialogClass;
+import co.banglabs.pips_lover.CustomDialogClass;
 import co.banglabs.pips_lover.R;
 import co.banglabs.pips_lover.datahandle.AgentBundle;
 
@@ -48,6 +52,16 @@ public class AgentAdapter extends ArrayAdapter {
         total_user.setText(agentBundle.getTotal_users());
 
 
+        pay_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("agentl", "1");
+                AgentPayDialogClass apdc=new AgentPayDialogClass(context, agentBundle.getAgent_token(), agentBundle.getAgent_name(), agentBundle.getNew_users());
+                apdc.show();
+
+            }
+        });
         /*if(agentBundle.getUpdate_time().equals(currentDateandTime)){
             if(agentBundle.getPair_action().equals("BUY")){
                 parentv.setBackgroundColor(Color.parseColor("#CBFBD3"));

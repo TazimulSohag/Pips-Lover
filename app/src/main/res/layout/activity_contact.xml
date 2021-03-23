@@ -29,25 +29,25 @@
         </FrameLayout>
 
 
-        <EditText
+        <!--<EditText
             android:id="@+id/feedback_email_id"
+            android:background="@drawable/edit_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="25dp"
-            android:background="@drawable/rounded_border_white"
             android:hint="Enter your Email"
             android:padding="5dp"
-            android:textSize="22sp" />
+            android:textSize="22sp" />-->
 
         <ScrollView
             android:id="@+id/scroll"
+            android:background="@drawable/edit_style"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_below="@+id/feedback_email_id"
-            android:layout_marginHorizontal="10dp"
-            android:background="@drawable/rounded_border_white">
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="10dp">
 
             <EditText
                 android:id="@+id/user_revew_box_id"
@@ -58,40 +58,54 @@
 
         </ScrollView>
 
+        <LinearLayout
+            android:layout_below="@+id/scroll"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:weightSum="2"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/clear_btn_id"
+                style="@style/Widget.AppCompat.Light.ActionButton"
+                android:backgroundTint="@color/red_dark2"
+                android:layout_marginHorizontal="10dp"
+                android:text="Clear"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_8"
+                android:layout_marginBottom="@dimen/margin_top_8"
+                android:layout_marginLeft="@dimen/margin_right_16"
+                android:layout_marginRight="@dimen/margin_right_16"
+                android:background="@drawable/rounded_border_blank"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_20"
+                />
+
+            <Button
+                android:id="@+id/send_btn_id"
+                style="@style/Widget.AppCompat.Light.ActionButton"
+                android:background="@drawable/rounded_border_blank"
+                android:layout_marginHorizontal="10dp"
+                android:text="Send"
+                android:backgroundTint="@color/happy"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_8"
+                android:layout_marginBottom="@dimen/margin_top_8"
+                android:layout_marginLeft="@dimen/margin_right_16"
+                android:layout_marginRight="@dimen/margin_right_16"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_20"/>
+        </LinearLayout>
+
 
     </RelativeLayout>
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
-        android:weightSum="2"
-        android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/clear_btn_id"
-            style="@style/Widget.AppCompat.Light.ActionButton"
-            android:background="@drawable/rounded_border_blank"
-            android:layout_marginHorizontal="10dp"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:text="Clear"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/send_btn_id"
-            style="@style/Widget.AppCompat.Light.ActionButton"
-            android:background="@drawable/rounded_border_blank"
-            android:layout_marginHorizontal="10dp"
-            android:textColor="@color/white"
-            android:textSize="22sp"
-            android:text="Send"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
 
 
 

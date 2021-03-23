@@ -8,14 +8,18 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 import co.banglabs.pips_lover.R;
@@ -26,11 +30,26 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     TextView goto_reg, forgot_pass;
     private FirebaseAuth mAuth;
     SharedPreferences sharedPref;
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_login);
+
+
+        if (user != null) {
+            Log.d("userid", "logd in");
+            Log.d("userid", ""+user.getUid());
+            // User is signed in
+        } else {
+            Log.d("userid", "loged out");
+            // No user is signed in
+        }
 
         sharedPref = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
         try{
@@ -141,13 +160,23 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         }
 
+        /*if(user.isEmailVerified()){
+
+        }else{
+            logName.requestFocus();
+            logName.setError("Email is not verified");
+        }*/
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
 
             if (task.isSuccessful()) {
+
                 // Sign in success, update UI with the signed-in user's information
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     saveData();
                 }
+
+
 
                 Intent intent = new Intent(Login.this, MainActivity.class);
                 startActivity(intent);
@@ -159,11 +188,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         });
 
+
     }
 
 
     private void saveData()  {
-
 
         SharedPreferences.Editor editor = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE).edit();
         editor.putString(String.valueOf(R.string.login_email), logName.getText().toString());

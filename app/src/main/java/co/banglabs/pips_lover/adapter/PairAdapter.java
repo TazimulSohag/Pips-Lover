@@ -63,7 +63,7 @@ public class PairAdapter extends ArrayAdapter {
         statas.setText(pairBundle.getPair_statas());
         if(pairBundle.getTrade_result().equals("Expired")){
             current_position.setVisibility(View.VISIBLE);
-            current_position.setTextColor(Color.RED);
+            current_position.setTextColor(Color.WHITE );
             current_position.setText(pairBundle.getTrade_result());
         }else{
             current_position.setVisibility(View.GONE);

@@ -84,16 +84,18 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/option_section"
+
             android:layout_width="match_parent"
             android:paddingHorizontal="20dp"
             android:layout_below="@id/current_value_section"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal">
 
 
             <TextView
+                android:id="@+id/tv_id"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
@@ -105,6 +107,8 @@
 
             <RadioGroup
                 android:id="@+id/action_group_id"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_id"
                 android:orientation="horizontal"
                 android:baselineAligned="true"
                 android:layout_width="wrap_content"
@@ -127,8 +131,18 @@
 
             </RadioGroup>
 
+            <ImageButton
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:id="@+id/copy_pest_id"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginLeft="40dp"
+                android:background="@color/transparent"
+                android:src="@drawable/copy_icon"/>
 
-        </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/tp1_section"
