@@ -1,6 +1,8 @@
 package co.banglabs.pips_lover.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        Log.d("click"," start ");
+        Log.d("click", " start ");
 
 
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             user_info_reference = FirebaseDatabase.getInstance().getReference("UserInfo").child(user.getUid());
 
-            Log.d("click","ok");
+            Log.d("click", "ok");
 
             navigationView = (NavigationView) findViewById(R.id.navmenu);
             View headerView = navigationView.getHeaderView(0);
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
 
-            Log.d("click"," not ok");
+            Log.d("click", " not ok");
 
             // No user is signed in
         }
@@ -511,5 +513,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        MainActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
 
 }
