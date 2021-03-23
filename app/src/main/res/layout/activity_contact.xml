@@ -29,17 +29,7 @@
         </FrameLayout>
 
 
-        <!--<EditText
-            android:id="@+id/feedback_email_id"
-            android:background="@drawable/edit_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="25dp"
-            android:hint="Enter your Email"
-            android:padding="5dp"
-            android:textSize="22sp" />-->
+
 
         <ScrollView
             android:id="@+id/scroll"
