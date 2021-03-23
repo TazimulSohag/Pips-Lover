@@ -35,8 +35,17 @@
         android:title="@string/share" />
 
     <item
+        android:id="@+id/rate_id"
+        android:title="Rate App"
+        android:icon="@drawable/rate_icon"/>
+
+    <item
         android:id="@+id/logout"
         android:icon="@drawable/logout_icon"
         android:title="@string/logout" />
+
+
+
+
 
 </menu>

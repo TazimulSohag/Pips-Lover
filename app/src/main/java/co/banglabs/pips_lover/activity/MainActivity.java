@@ -6,9 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -224,6 +226,21 @@ public class MainActivity extends AppCompatActivity {
                         shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
                         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                         startActivity(Intent.createChooser(shareIntent, "choose one"));
+                    } catch (Exception e) {
+                        //e.toString();
+                    }
+                    break;
+
+                case R.id.rate_id:
+                    try {
+                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                        shareIntent.setType("text/plain");
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "My application name");
+                        String shareMessage = "if you like,share this app";
+                        shareMessage = shareMessage + "https://play.google.com/store/apps/details?id=co.banglabs.pips_lover ";
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                        startActivity(Intent.createChooser(shareIntent, "choose one"));
+
                     } catch (Exception e) {
                         //e.toString();
                     }
@@ -515,6 +532,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // on back press
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setMessage("Are you sure you want to exit?")
