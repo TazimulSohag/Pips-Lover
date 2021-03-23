@@ -21,7 +21,7 @@ Developers :
  Linkedin : linkedin.com/in/tazimul-sohag/
  
  
- Abu Jafor 
+ MD.Abu Jafor Saleh
  Android Developer
  Team Lead (Banglabs)
  Email : abujafo34@gmail.com

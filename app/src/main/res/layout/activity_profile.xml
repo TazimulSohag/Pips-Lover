@@ -4,21 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ProfileActivity"
-    android:background="@drawable/backgroundtwo">
+    android:background="@drawable/backgroundtwo"
+    tools:context=".activity.ProfileActivity">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_profile"
-        app:title="Profile"
-        app:titleTextColor="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        app:title="Profile"
+        app:titleTextColor="@color/white" />
+
     <RelativeLayout
-        android:padding="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar_profile">
+        android:layout_below="@id/toolbar_profile"
+        android:padding="2dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -27,16 +28,132 @@
             android:background="@drawable/background_fade">
 
         </FrameLayout>
+
         <RelativeLayout
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Welcome "
-                android:textColor="@color/white"/>
+            <RelativeLayout
+                android:id="@+id/up_section"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="#999AF4"
+                tools:ignore="UselessParent">
+
+                <ImageView
+                    android:id="@+id/icon_id"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25dp"
+                    android:contentDescription="icon"
+                    android:src="@mipmap/pips_lover_round" />
+
+                <TextView
+                    android:id="@+id/user_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/icon_id"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:text="MD.Abu Jafor Saleh"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="320dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="18dp"
+                            android:text="Subscription Date"
+                            android:textColor="@color/blue"
+                            android:textSize="18sp" />
+
+
+                        <TextView
+                            android:id="@+id/day_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="18dp"
+                            android:layout_marginEnd="20dp"
+                            android:text="60 Days"
+                            android:textColor="@color/blue"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/lower_section"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/up_section"
+                android:layout_margin="20dp">
+
+
+                <TextView
+                    android:id="@+id/name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:text="Name"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/user_name_id2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_toEndOf="@+id/name_id"
+                    android:text="MD.Abu Jafor Saleh"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+
+                <TextView
+                    android:id="@+id/email_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/name_id"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="12dp"
+                    android:text="Email"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+
+                <TextView
+                    android:id="@+id/user_mail_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/user_name_id2"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toEndOf="@+id/name_id"
+                    android:text="tazimulsohag007@gmail.com"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

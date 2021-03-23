@@ -103,11 +103,11 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
                 }
                 else{
-                    resetMail.setError("Enter an Email Aaddress");
+                    resetMail.setError("Enter an Email Address");
                 }
 
             });
-            passwordResetDialog.setNeutralButton("Cancle", (dialog, which) -> {
+            passwordResetDialog.setNeutralButton("Cancel", (dialog, which) -> {
 
             });
             passwordResetDialog.setCancelable(true);
