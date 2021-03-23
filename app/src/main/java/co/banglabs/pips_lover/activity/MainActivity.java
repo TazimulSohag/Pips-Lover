@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
 
         //database methods
 
-        /*user_info_reference.addValueEventListener(new ValueEventListener() {
+        user_info_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-        });*/
+        });
 
 
         admin_reference.addValueEventListener(new ValueEventListener() {

@@ -2,7 +2,9 @@ package co.banglabs.pips_lover.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +33,7 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_contact);
 
@@ -42,7 +44,6 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-        //email = findViewById(R.id.feedback_email_id);
         revew = findViewById(R.id.user_revew_box_id);
 
         clear = findViewById(R.id.clear_btn_id);
@@ -59,26 +60,32 @@ public class ContactActivity extends AppCompatActivity implements View.OnClickLi
 
         if (view.getId() == R.id.clear_btn_id) {
 
-            //email.setText("");
+
             revew.setText("");
 
         } else if (view.getId() == R.id.send_btn_id) {
+
+
             try {
 
-                if (/*!email.getText().toString().isEmpty() && email.getText().toString().contains("@") && email.getText().toString().toLowerCase().contains(".com") &&*/ !revew.getText().toString().isEmpty()) {
-
+                if (!revew.getText().toString().isEmpty()) {
                     FeedbackBundle feedbackBundle = new FeedbackBundle(user.getEmail(), revew.getText().toString());
-
                     feedback_reference.child(user.getUid()).setValue(feedbackBundle);
                     Toast.makeText(this, "Thank you for your cooperation", Toast.LENGTH_SHORT).show();
+
+                    this.finish();
+                    this.finish();
 
 
                 } else {
                     Toast.makeText(this, "Please fill all the information correctly", Toast.LENGTH_SHORT).show();
                 }
-            } catch (Exception e) {
+
+
+            } catch (Exception ignored) {
 
             }
+
         }
     }
 
