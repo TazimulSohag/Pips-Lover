@@ -250,12 +250,14 @@ public class MainActivity extends AppCompatActivity {
         user_info_reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 navEmail.setText(snapshot.child("email").getValue(String.class));
                 navUsername.setText(snapshot.child("name").getValue(String.class));
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
 
             }
         });
